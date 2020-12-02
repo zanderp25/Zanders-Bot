@@ -1,0 +1,110 @@
+#tictactoe
+ttt = [' ',' ',' ',' ',' ',' ',' ',' ',' ']
+tttchannel = ''
+player = 1
+newGame = True
+p1 = ''
+p2 = ''
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content.startswith(';hello'):
+        time = datetime.datetime.now()
+        await message.channel.send(f'Hello, {message.author.mention} !')
+        log(f'{time} - #{message.channel} - {message.author} said Hello!')
+
+    if message.content.startswith(';nice'):
+        time = datetime.datetime.now()
+        await message.channel.send(f'Nice')
+        if str(message.author) == 'Zanderp25#1897':
+            nice = '(Nice)'
+        else:
+            nice = ''
+        log(f'{time} - #{message.channel} - Nice - {message.author} {nice}')
+
+    if message.content.startswith(';ping'):
+        time = datetime.datetime.now()
+        await message.channel.send('Pong! `' + str(round(client.latency * 1000)) + ' ms` <a:party_parrot:720424857699090464>')
+        log(f'{time} - Pinged by {message.author} in #{message.channel} | Ponged with {round(client.latency*1000)} ms')
+
+    if message.content.startswith(';time'):
+        time = datetime.datetime.now()
+        await message.channel.send(f'Current bot time: `{time.strftime("%-I:%M:%S %p %A %b %-d, %Y")}`')
+        log(f'{time} - Time requested by {message.author} in #{message.channel}')
+
+    if message.content.startswith(';ttt'):
+        try:
+            time = datetime.datetime.now()
+            try:
+                content = (message.content.split(" "))[1]
+            except:
+                content = ''
+            if newGame == True:
+                log(f'{time} - Tac-tac-toe game started by {message.author}')
+                p1 = message.author
+                tttchannel = message.channel
+                tttExample = '``` 1 | 2 | 3 \n---+---+---\n 4 | 5 | 6 \n---+---+---\n 7 | 8 | 9 ```'
+                await message.channel.send(f'{message.author.mention}\n**Tic-tac-toe**\nThis is a two player game. \
+    {message.author.mention} goes first.\nHow to play: type `;ttt` followed by a space, and then the corresponding number \
+    from the chart below:' + tttExample)
+                newGame = False
+            elif newGame == False:
+                if message.channel == tttchannel:
+                    #if it is not the player's turn or they are not a player
+                    if p2 == '' & message.author != p1:
+                        await message.channel.send(f'Player 2 is now {message.author.mention}')
+                        log(f'{time} - {message.author} is player 2 in the TTT game (#{message.channel})')
+                    elif (message.author == p1 & player == 2) or (message.author == p2 & player == 1):
+                        await message.channel.send(f'{message.author.mention} Hey, it\s not your turn yet!')
+                        log(f'{time} - {message.author} tried to skip a turn in the TTT game (#{message.channel})')
+                    elif (message.author != p1) or (message.author != p2):
+                        await message.channel.send(f'{message.author.mention} There can only be two people playing tic-tac-toe!')
+                        log(f'{time} - {message.author} tried to join a two person game when there are two people playing already! (#{message.channel})')
+                    if (message.author == p1 & player == 1) or (message.author == p2 & player == 2):
+
+                            if isinstance(content, int):
+                                #if it is an int
+                                await message.channel.send(f'Player {player} sent the int {content}... I don\'t know what to do with it yet!!')
+                                log(f'{time} - {message.author} \ Player {player} sent the int {content}... I don\'t know what to do with it yet!! (#{message.channel})')
+                            else:
+                                await message.channel.send(f'{message.author.mention} I need an integer from 1 to 9.')
+                                log(f'{time} - {message.author} (Player {player}) (#{message.channel}) Value: {content}')
+                else:
+                    await message.channel.send(f'{message.author.mention} There is already a game going on in #{tttchannel}')
+                    log(f'{time} - {message.author} tried to start a tic-tac-toe game in #{message.channel}, but couldn\'t. \
+    There\'s another game going on!')
+        except Exception as e:
+            await message.channel.send(f':warning: **Error** ```{e}```')
+            log(f'{time} - #{message.channel} - {message.author} used ;ttt and threw exception: \n\'{e}\'')
+            
+    if message.content.startswith(';send') | message.content.startswith(';say'):
+        time = datetime.datetime.now()
+        content = " ".join((message.content.split(" "))[1:])
+        await message.channel.send(f'{message.author.mention} said "{content}"')
+        log(f'{time} - #{message.channel} - {message.author} says "{content}"')
+
+    if message.content.startswith(';secret'):
+        time = datetime.datetime.now()
+        await message.channel.send(f'||Never gonna give you up||')
+        await message.delete()
+        log(f'{time} - {message.author} got Rick-Rolled in #{message.channel}')
+
+    if message.content.startswith('GG') & (str(message.author)=='MEE6#4876'):
+        time = datetime.datetime.now()
+        await message.channel.send(f'I didn\'t ask, {message.author.mention}')
+        log(f'{time} - Dad, {message.author} is being annoying againn.. (#{message.channel})')
+
+    if message.content.startswith(';help'):
+        time = datetime.datetime.now()
+        helptxt = '**Command List**\n'
+        helptxt = helptxt + '> • `;hello` *Hello to you, too*\n'
+        helptxt = helptxt + '> • `;nice` *Nice*'
+        helptxt = helptxt + '> • `;ping` *Test the latency of the bot*\n'
+        helptxt = helptxt + '> • `;say` or `;send` *Send a message to the bot*\n'
+        helptxt = helptxt + '> • `;time` *Shows current time of the bot*\n'
+        helptxt = helptxt + f'*Requested by {message.author.mention}*'
+        await message.channel.send(helptxt)
+        log(f'{time} - {message.author} requested the command help list in #{message.channel}')
