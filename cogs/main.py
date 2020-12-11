@@ -52,9 +52,12 @@ class Main(commands.Cog):
 
     @commands.command(hidden=True)
     async def secret(self, ctx):
-        '''Uhh... you're not supposed to see this'''
+        '''Uhh... you're not supposed to see this
+        
+        Well... I guess you see it now... This is a command that provides a link to a website that has a 1 in 50 chance to reveal a secret.
+        ||Maybe something else, too.||'''
         time = datetime.now()
-        await ctx.channel.send(f'||Never gonna give you up||')
+        await ctx.channel.send(embed = discord.Embed(title = "1 in 50 Chance", description = f'[Reveal Secret](https://zanderp25.com/secret)'))
         await ctx.message.delete()
         await self.log(f'{time} - {ctx.author} got Rick-Rolled in {ctx.guild} / #{ctx.channel}')
 
