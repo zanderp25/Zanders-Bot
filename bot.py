@@ -12,7 +12,7 @@ token = open("token.txt").read()
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(';'), intents=intents)
 
-cogs = ['jishaku', 'cogs.main', 'cogs.moderation', 'cogs.tictac', 'cogs.voice','cogs.dev']
+cogs = ['jishaku', 'cogs.main', 'cogs.moderation', 'cogs.tictac', 'cogs.voice','cogs.dev', 'cogs.guild']
 
 for cog in cogs:
     try:
