@@ -66,7 +66,7 @@ class Moderation(commands.Cog):
     async def purge(self, ctx, number:int, purge_pinned_messages:bool = False):
         '''Purges {number} amount of messages. If {purge_pinned_messages} is true, then it will delete pinned messages too.'''
         await ctx.message.delete()
-        if purge_pinned_messages == True
+        if purge_pinned_messages == True:
             n = await ctx.channel.purge(limit=number)
         else:
             n = await ctx.channel.purge(limit=number, check=!message.pinned)
