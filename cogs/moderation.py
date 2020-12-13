@@ -69,10 +69,11 @@ class Moderation(commands.Cog):
         if purge_pinned_messages == True:
             n = await ctx.channel.purge(limit=number)
         else:
-            n = await ctx.channel.purge(limit=number, check=!message.pinned)
+            n = await ctx.channel.purge(limit=number, check=lambda msg: not msg.pinned)
         msg = await ctx.send(f"Deleted {len(n)} messages.")
         await asyncio.sleep(2)
         await msg.delete()
+    
 
 
 def setup(bot):
