@@ -50,6 +50,12 @@ class Main(commands.Cog):
         await ctx.channel.send(embed=embed)
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} says "{arg}"')
 
+    @commands.command()
+    @commands.is_owner()
+    async def echo(self, ctx, *, message:str):
+        '''Like the shell echo command'''
+        ctx.send(message)
+        
     @commands.command(hidden=True)
     async def secret(self, ctx):
         '''Uhh... you're not supposed to see this
