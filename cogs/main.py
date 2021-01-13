@@ -54,7 +54,7 @@ class Main(commands.Cog):
     @commands.is_owner()
     async def echo(self, ctx, *, message:str):
         '''Like the shell echo command'''
-        ctx.send(message)
+        ctx.send(f'message')
         
     @commands.command(hidden=True)
     async def secret(self, ctx):
