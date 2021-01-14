@@ -1,4 +1,4 @@
-import discord
+import discord, typing
 from datetime import datetime
 from discord.ext import commands
 
@@ -52,10 +52,12 @@ class Main(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def echo(self, ctx, *, message:str):
+    async def echo(self, ctx, hide:typing.Optional[bool]=False, *, message:str):
         '''Like the shell echo command'''
-        ctx.send(message)
-        
+        if hide:
+            await ctx.message.delete()
+        await ctx.send(f"{''.join(message)}")
+
     @commands.command(hidden=True)
     async def secret(self, ctx):
         '''Uhh... you're not supposed to see this
