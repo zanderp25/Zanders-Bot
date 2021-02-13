@@ -1,4 +1,4 @@
-import discord
+import discord, os
 from datetime import datetime
 from discord.ext import commands
 
@@ -12,6 +12,20 @@ class Main(commands.Cog):
         f = open("bot.log", 'a')
         f.write('\n' + x)
         f.close()
+
+    @commands.command(aliases = ["startmc","stopmc"])
+    @commands.is_owner
+    async def controlmc(self, ctx):
+        if ctx.invoked_with == "startmc":
+            m = await ctx.send("<a:loading:742718904622907463> Starting server...")
+            os.system("pm2 start 0 | ssh 192.168.0.11")
+            await m.edit(content="Server started!")
+        elif ctx.invoked_with == "stopmc":
+            m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
+            os.system("pm2 stop 0 | ssh 192.168.0.11")
+            await m.edit(content="Server stopped!")
+        else:
+            await ctx.send(f"To start/stop the server, do `{ctx.prefix}startmc` or `{ctx.prefix}stopmc`")
 
     @commands.command(aliases = ["requestvc","vc"])
     async def personalvc(self, ctx):
