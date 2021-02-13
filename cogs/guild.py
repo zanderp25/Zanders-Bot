@@ -14,7 +14,7 @@ class Main(commands.Cog):
         f.close()
 
     @commands.command(aliases = ["startmc","stopmc"])
-    @commands.is_owner
+    @commands.is_owner()
     async def controlmc(self, ctx):
         if ctx.invoked_with == "startmc":
             m = await ctx.send("<a:loading:742718904622907463> Starting server...")
