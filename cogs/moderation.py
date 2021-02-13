@@ -19,7 +19,7 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *,reason="No reason given."):
         '''Kicks a user'''
-        if "yeet" in ctx.message.content:
+        if ctx.invoked_with == "yeet":
             msg = await ctx.send(f"Yeeting member `{member}`")
             await member.kick(reason=reason)
             try:
