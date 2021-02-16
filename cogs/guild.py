@@ -13,19 +13,22 @@ class Main(commands.Cog):
         f.write('\n' + x)
         f.close()
 
-    @commands.command(aliases = ["startmc","stopmc"])
+    @commands.group()
     @commands.is_owner()
-    async def controlmc(self, ctx):
-        if ctx.invoked_with == "startmc":
-            m = await ctx.send("<a:loading:742718904622907463> Starting server...")
-            os.system('echo "pm2 start 0" | ssh 192.168.0.11')
-            await m.edit(content="Server started!")
-        elif ctx.invoked_with == "stopmc":
-            m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
-            os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
-            await m.edit(content="Server stopped!")
-        else:
-            await ctx.send(f"To start/stop the server, do `{ctx.prefix}startmc` or `{ctx.prefix}stopmc`")
+    async def mc(self, ctx):
+        pass
+
+    @mc.command()
+    async def start(self, ctx):
+        m = await ctx.send("<a:loading:742718904622907463> Starting server...")
+        os.system('echo "pm2 start 0" | ssh 192.168.0.11')
+        await m.edit(content="Server started!")
+
+    @mc.command()
+    async def stop(self, ctx):
+        m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
+        os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
+        await m.edit(content="Server stopped!")
 
     @commands.command(aliases = ["requestvc","vc"])
     async def personalvc(self, ctx):
