@@ -40,6 +40,8 @@ class Main(commands.Cog):
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
         await m.edit(content="<a:loading:742718904622907463> Backing up the server...")
         os.system('echo "cd ~/Minecraft; ./backup.sh" | ssh 192.168.0.11')
+        await m.edit(content="<a:loading:742718904622907463> Starting server...")
+        os.system('echo "pm2 start 0" | ssh 192.168.0.11')
         await m.edit(content="Done!")
 
     @commands.command(aliases = ["requestvc","vc"])
