@@ -33,6 +33,15 @@ class Main(commands.Cog):
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
         await m.edit(content="Server stopped!")
 
+    @mc.command()
+    async def backup(self, ctx):
+        '''Saves a backup of the server'''
+        m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
+        os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
+        await m.edit(content="<a:loading:742718904622907463> Backing up the server...")
+        os.system('echo "cd ~/Minecraft; ./backup.sh" | ssh 192.168.0.11')
+        await m.edit(content="Done!")
+
     @commands.command(aliases = ["requestvc","vc"])
     async def personalvc(self, ctx):
         if ctx.guild.id == 611278159555461180:
