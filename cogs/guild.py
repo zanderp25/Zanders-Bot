@@ -21,14 +21,14 @@ class Main(commands.Cog):
 
     @mc.command()
     async def start(self, ctx):
-        '''Starts the Minecraft Server'''
+        '''Starts the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Starting server...")
         os.system('echo "pm2 start 0" | ssh 192.168.0.11')
         await m.edit(content="Server started!")
 
     @mc.command()
     async def stop(self, ctx):
-        '''Stops the Minecraft Server'''
+        '''Stops the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
         await m.edit(content="Server stopped!")
