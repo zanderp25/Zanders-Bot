@@ -13,7 +13,7 @@ class Main(commands.Cog):
         f.write('\n' + x)
         f.close()
 
-    @commands.group()
+    @commands.group(aliases=["minecraft"])
     @commands.is_owner()
     async def mc(self, ctx):
         pass
