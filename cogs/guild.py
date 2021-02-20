@@ -19,29 +19,29 @@ class Main(commands.Cog):
         '''Controls the Minecraft server'''
         pass
 
-    @mc.command()
-    async def start(self, ctx):
+    @mc.command(name="start")
+    async def mc_start(self, ctx):
         '''Starts the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Starting server...")
         os.system('echo "pm2 start 0" | ssh 192.168.0.11')
         await m.edit(content="Server started!")
 
-    @mc.command()
-    async def stop(self, ctx):
+    @mc.command(name="stop")
+    async def mc_stop(self, ctx):
         '''Stops the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         await self.bot.get_guild(611278159555461180).get_channel(787729896709029889).send("stop")
         await m.edit(content="Server stopped!")
 
-    @mc.command(aliases=["kill"])
-    async def force_stop(self, ctx):
+    @mc.command(name="force_stop", aliases=["kill","force-stop"])
+    async def mc_force_stop(self, ctx):
         '''Kills the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
         await m.edit(content="Server stopped!")
 
-    @mc.command()
-    async def backup(self, ctx):
+    @mc.command(name="backup")
+    async def mc_backup(self, ctx):
         '''Saves a backup of the server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
@@ -51,8 +51,8 @@ class Main(commands.Cog):
         os.system('echo "pm2 start 0" | ssh 192.168.0.11')
         await m.edit(content="Done!")
     
-    @mc.command()
-    async def log(self,ctx):
+    @mc.command(name="log")
+    async def mc_log(self,ctx):
         await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx, argument=Codeblock("", 'echo "pm2 log 0" | ssh 192.168.0.11'))
 
     @commands.command(aliases = ["requestvc","vc"])
