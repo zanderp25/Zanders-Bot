@@ -1,7 +1,7 @@
 import discord, os
 from datetime import datetime
 from discord.ext import commands
-
+from jishaku.codeblocks import Codeblock
 
 class Main(commands.Cog):
     def __init__(self, bot):
@@ -50,6 +50,10 @@ class Main(commands.Cog):
         await m.edit(content="<a:loading:742718904622907463> Starting server...")
         os.system('echo "pm2 start 0" | ssh 192.168.0.11')
         await m.edit(content="Done!")
+    
+    @mc.command()
+    async def log(self,ctx):
+        await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx, argument=Codeblock("", 'echo "pm2 log 0" | ssh 192.168.0.11'))
 
     @commands.command(aliases = ["requestvc","vc"])
     async def personalvc(self, ctx):
