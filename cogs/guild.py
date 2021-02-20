@@ -30,6 +30,13 @@ class Main(commands.Cog):
     async def stop(self, ctx):
         '''Stops the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
+        await self.bot.get_guild(611278159555461180).get_channel(787729896709029889).send("stop")
+        await m.edit(content="Server stopped!")
+
+    @mc.command(aliases=["kill"])
+    async def force_stop(self, ctx):
+        '''Kill the Minecraft server'''
+        m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
         await m.edit(content="Server stopped!")
 
