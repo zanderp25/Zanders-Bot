@@ -1,6 +1,7 @@
 import discord
 from datetime import datetime
 from discord.ext import commands
+from jishaku.codeblocks import Codeblock, codeblock_converter
 
 
 class Dev(commands.Cog):
@@ -30,6 +31,11 @@ class Dev(commands.Cog):
         ctx.bot.get_command(command).update(enabled=False)
         await ctx.send(embed=embed)
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} disabled `;{command}`')
+
+    @commands.command()
+    @commands.is_owner()
+    async def eval(self,ctx, *, argument:codeblock_converter):
+        await self.client.cogs["Jishaku"].jsk_python(ctx=ctx,argument=argument)
 
 def setup(bot):
     bot.add_cog(Dev(bot))
