@@ -35,7 +35,7 @@ class Dev(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def eval(self,ctx, *, argument:codeblock_converter):
-        await self.client.cogs["Jishaku"].jsk_python(ctx=ctx,argument=argument)
+        await self.bot.cogs["Jishaku"].jsk_python(ctx=ctx,argument=argument)
 
 def setup(bot):
     bot.add_cog(Dev(bot))
