@@ -53,6 +53,7 @@ class Main(commands.Cog):
     
     @mc.command(name="log")
     async def mc_log(self,ctx):
+        '''View the log of the Minecraft Server'''
         await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx, argument=Codeblock("", 'echo "pm2 log 0" | ssh 192.168.0.11'))
 
     @commands.command(aliases = ["requestvc","vc"])
