@@ -35,7 +35,7 @@ class Main(commands.Cog):
 
     @mc.command(aliases=["kill"])
     async def force_stop(self, ctx):
-        '''Kill the Minecraft server'''
+        '''Kills the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
         await m.edit(content="Server stopped!")
