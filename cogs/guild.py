@@ -1,4 +1,4 @@
-import discord, os
+import discord, os, re
 from datetime import datetime
 from discord.ext import commands
 from jishaku.codeblocks import Codeblock
@@ -50,6 +50,11 @@ class Main(commands.Cog):
         await m.edit(content="<a:loading:742718904622907463> Starting server...")
         os.system('echo "pm2 start 0" | ssh 192.168.0.11')
         await m.edit(content="Done!")
+
+    @mc.command(name="status")
+    async def mc_status(self,ctx):
+        '''Shows the status of the server'''
+        pass
     
     @mc.command(name="log")
     async def mc_log(self,ctx):
