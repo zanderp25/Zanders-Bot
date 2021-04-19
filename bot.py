@@ -12,7 +12,11 @@ token = open("token.txt").read()
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=commands.when_mentioned_or([';','；']), intents=intents, case_insensitive=True)
 
-cogs = ['jishaku', 'cogs.main', 'cogs.moderation', 'cogs.tictac', 'cogs.voice','cogs.dev', 'cogs.guild']
+cogs = ['jishaku']
+
+for file in os.listdir("cogs"):
+    if file.endswith(".py"):
+        cogs.append(f"cogs.{file[:-3]}")
 
 for cog in cogs:
     try:
