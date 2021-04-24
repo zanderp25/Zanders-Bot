@@ -23,7 +23,7 @@ class Main(commands.Cog):
     async def mc_start(self, ctx):
         '''Starts the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Starting server...")
-        os.system('echo "pm2 start 0" | ssh 192.168.0.11')
+        os.system('echo "pm2 start 0" | ssh 192.168.0.31')
         await m.edit(content="Server started!")
 
     @mc.command(name="stop")
@@ -37,21 +37,21 @@ class Main(commands.Cog):
     async def mc_force_stop(self, ctx):
         '''Kills the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
-        os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
+        os.system('echo "pm2 stop 0" | ssh 192.168.0.31')
         await m.edit(content="Server stopped!")
 
     @mc.command(name="backup")
     async def mc_backup(self, ctx):
         '''Saves a backup of the server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
-        os.system('echo "pm2 stop 0" | ssh 192.168.0.11')
+        os.system('echo "pm2 stop 0" | ssh 192.168.0.31')
         await m.edit(content="<a:loading:742718904622907463> Backing up the server...")
-        os.system('echo "cd ~/Minecraft; ./backup.sh" | ssh 192.168.0.11')
+        os.system('echo "cd ~/Minecraft; ./backup.sh" | ssh 192.168.0.31')
         await m.edit(content="<a:loading:742718904622907463> Starting server...")
-        os.system('echo "pm2 start 0" | ssh 192.168.0.11')
+        os.system('echo "pm2 start 0" | ssh 192.168.0.31')
         await m.edit(content="Done!")
 
-    @mc.command(name="status")
+    @mc.command(name="status", hidden=True)
     async def mc_status(self,ctx):
         '''Shows the status of the server'''
         pass
@@ -59,7 +59,7 @@ class Main(commands.Cog):
     @mc.command(name="log")
     async def mc_log(self,ctx):
         '''View the log of the Minecraft Server'''
-        await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx, argument=Codeblock("", 'echo "pm2 log 0" | ssh 192.168.0.11'))
+        await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx, argument=Codeblock("", 'echo "pm2 log 0" | ssh 192.168.0.31'))
 
     @commands.command(aliases = ["requestvc","vc"])
     async def personalvc(self, ctx):
