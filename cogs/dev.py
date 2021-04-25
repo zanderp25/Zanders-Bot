@@ -179,7 +179,7 @@ class Dev(commands.Cog):
                     color=colours["create"]
                 ))
                 try:
-                    out = subprocess.run(["pm2", "reload", "3"], stdout=subprocess.PIPE).returncode
+                    out = subprocess.run(["pm2", "reload", '"Zander\'s Bot"'], stdout=subprocess.PIPE).returncode
                 except FileNotFoundError:
                     out = 1
                 await m.edit(embed=discord.Embed(
