@@ -66,12 +66,4 @@ async def on_message(message):
     
     await bot.process_commands(message)
 
-@bot.event
-async def on_error(self, event_method, *args, **kwargs):
-    fmt = event_method.format_exc()
-    if "AttributeError: 'NoneType' object has no attribute 'send'" in fmt:
-        return  # ignore
-    print('Ignoring exception in {}'.format(event_method), file=sys.stderr)
-    event_method.print_exc()
-
 bot.run(token)
