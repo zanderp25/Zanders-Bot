@@ -79,7 +79,7 @@ class Dev(commands.Cog):
                             f"{self.bot.get_emoji(gc['push'])} **Push** current commit\n\n"
                             f"{self.bot.get_emoji(gc['reload'])} **PM2 reload**",
                 color=colours["create"]
-            ))).set_footer(text="By Clicks Minute Per")
+            )).set_footer(text="By Clicks Minute Per"))
             try:
                 reaction = await ctx.bot.wait_for("reaction_add", timeout=60, check=lambda _, user: user == ctx.author)
             except asyncio.TimeoutError:
