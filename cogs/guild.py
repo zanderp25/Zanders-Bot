@@ -12,6 +12,9 @@ class Main(commands.Cog):
         f = open("bot.log", 'a')
         f.write('\n' + x)
         f.close()
+        
+    async def run_sync(self, func: callable, *args, **kwargs):
+        return await self.bot.loop.run_in_executor(None, functools.partial(func, *args, **kwargs))
 
     @commands.group(aliases=["minecraft"])
     @commands.is_owner()
@@ -23,7 +26,7 @@ class Main(commands.Cog):
     async def mc_start(self, ctx):
         '''Starts the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Starting server...")
-        os.system('echo "pm2 start 0" | ssh 192.168.0.31')
+        await self.run_sync(os.system, 'echo "pm2 start 0" | ssh 192.168.0.31')
         await m.edit(content="Server started!")
 
     @mc.command(name="stop")
@@ -37,18 +40,18 @@ class Main(commands.Cog):
     async def mc_force_stop(self, ctx):
         '''Kills the Minecraft server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
-        os.system('echo "pm2 stop 0" | ssh 192.168.0.31')
+        await self.run_sync(os.system, 'echo "pm2 stop 0" | ssh 192.168.0.31')
         await m.edit(content="Server stopped!")
 
     @mc.command(name="backup")
     async def mc_backup(self, ctx):
         '''Saves a backup of the server'''
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
-        os.system('echo "pm2 stop 0" | ssh 192.168.0.31')
+        await self.run_sync(os.system, 'echo "pm2 stop 0" | ssh 192.168.0.31')
         await m.edit(content="<a:loading:742718904622907463> Backing up the server...")
-        os.system('echo "cd ~/Minecraft; ./backup.sh" | ssh 192.168.0.31')
+        await self.run_sync(os.system, 'echo "cd ~/Minecraft; ./backup.sh" | ssh 192.168.0.31')
         await m.edit(content="<a:loading:742718904622907463> Starting server...")
-        os.system('echo "pm2 start 0" | ssh 192.168.0.31')
+        await self.run_sync(os.system, 'echo "pm2 start 0" | ssh 192.168.0.31')
         await m.edit(content="Done!")
 
     @mc.command(name="status", hidden=True)
