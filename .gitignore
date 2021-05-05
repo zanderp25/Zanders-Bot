@@ -126,3 +126,4 @@ dmypy.json
 
 token.txt
 .DS_Store
+._*
