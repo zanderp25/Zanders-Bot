@@ -42,10 +42,10 @@ class Dev(commands.Cog):
     async def sh(self,ctx, *, argument:codeblock_converter):
         await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx,argument=argument)
 
-    # By Clicks Minute Per
     @commands.command()
     @commands.is_owner()
     async def git(self, ctx):
+        # By Clicks Minute Per
         m = await ctx.send(embed=discord.Embed(title="Loading..."))
         for r in [834127343206400021, 834148997324472391, 834127343533555713, 834127343525822474, 834127343244673055, 834139266921267211]:  # 834127343576023130
             await m.add_reaction(self.bot.get_emoji(r))
