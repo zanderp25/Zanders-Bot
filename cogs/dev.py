@@ -36,6 +36,11 @@ class Dev(commands.Cog):
     @commands.is_owner()
     async def eval(self,ctx, *, argument:codeblock_converter):
         await self.bot.cogs["Jishaku"].jsk_python(ctx=ctx,argument=argument)
+    
+    @commands.command()
+    @commands.is_owner()
+    async def sh(self,ctx, *, argument:codeblock_converter):
+        await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx,argument=argument)
 
     # By Clicks Minute Per
     @commands.command()
