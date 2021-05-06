@@ -13,12 +13,33 @@ class Main(commands.Cog):
         f.write('\n' + x)
         f.close()
 
-    @commands.command()
+    @commands.command(aliases=["こんにちは", "hola"])
     async def hello(self, ctx):
-        '''Hello to you, too!'''
+        '''Hello to you, too!
+        This command is available in these languages:
+        en, es, ja'''
         time = datetime.now()
-        await ctx.send(embed = discord.Embed(title = "\U0001f44b" + f" Hello, {ctx.author}!", description = f"_{ctx.author.mention} said hello... Hi!_"))
+        lang = "ja" if ctx.invoked_with == "こんにちは" else "es" if ctx.invoked_with == "hola" else "en"
+        name = ctx.author.display_name
+        mention = ctx.author.mention
+
+        if lang == "ja":
+            greeting = f"{name}、こんにちは！"
+        elif lang == "es":
+            greeting = f"¡Hola, {name}!"
+        else:
+            greeting = f"Hello, {name}!"
+        await ctx.send(
+            embed = discord.Embed(
+                title = "\U0001f44b " + greeting, 
+                description = f"_{mention} said hello... Hi!_"
+            ).set_footer(text=f"Language: {lang}")
+        )
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} said Hello!')
+
+    @commands.command(hidden=True)
+    async def apple(ctx):
+        await ctx.send("\uf8ff")
 
     @commands.command(aliases=['<:shut:751421349355978822>', "cmp_shut"])
     async def shut(self, ctx):
