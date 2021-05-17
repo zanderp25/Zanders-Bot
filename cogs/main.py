@@ -60,7 +60,7 @@ class Main(commands.Cog):
     async def ping(self, ctx):
         '''Test the latency of the bot'''
         time = datetime.now()
-        await ctx.channel.send('Pong! `' + str(round(self.bot.latency * 1000)) + ' ms` <a:party_parrot:720424857699090464>')
+        await ctx.send('Pong! `' + str(round(self.bot.latency * 1000)) + ' ms` <a:party_parrot:720424857699090464>')
         await self.log(f'{time} - Pinged by {ctx.author} in {ctx.guild} / #{ctx.channel} | Ponged with {round(self.bot.latency*1000)} ms')
 
     @commands.command(aliases=['log'])
