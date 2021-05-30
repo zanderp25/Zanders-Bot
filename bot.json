@@ -6,7 +6,7 @@
         "script":"bot.py",
         "args":[],
         "watch":[
-            "bot.py"
+            "bot.json"
         ],
         "node_args":[],
         "log_date_format":"YYYY-MM-DD HH:mm Z",
