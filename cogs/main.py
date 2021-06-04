@@ -80,8 +80,10 @@ class Main(commands.Cog):
         await ctx.send(f"{''.join(message)}")
 
     @commands.command(name="-;", aliases=["(","😭"])
-    async def waaa(self, ctx):
+    async def waaa(self, ctx, e:typing.Optional(bool)=False):
         pwp = [";-;","waaaaa","pwp","owo","*quietly judges you*","There, there...", "._.","¯\_(ツ)_/¯"]
+        if e is True:
+            pwp = ["¯\_(ツ)_/¯"]
         pwp = random.choice(pwp)
         m = await ctx.send(pwp)
         if str(pwp) == "¯\_(ツ)_/¯":
