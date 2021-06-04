@@ -79,7 +79,7 @@ class Main(commands.Cog):
             await ctx.message.delete()
         await ctx.send(f"{''.join(message)}")
 
-    @commands.command(name="-;", aliases=["(","😭"])
+    @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx, e:typing.Optional[bool]=False):
         pwp = [
             ";-;",
