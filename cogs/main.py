@@ -81,12 +81,19 @@ class Main(commands.Cog):
 
     @commands.command(name="-;", aliases=["(","😭"])
     async def waaa(self, ctx, e:typing.Optional[bool]=False):
-        pwp = [";-;","waaaaa","pwp","owo","*quietly judges you*","There, there...", "._.","¯\_(ツ)_/¯"]
-        if e is True:
-            pwp = ["¯\_(ツ)_/¯"]
+        pwp = [
+            ";-;",
+            "waaaaa",
+            "pwp",
+            "owo",
+            "*quietly judges you*",
+            "There, there...", 
+            "._.",
+            "¯\_(ツ)_/¯",
+        ]
         pwp = random.choice(pwp)
         m = await ctx.send(pwp)
-        if "¯\_(ツ)_/¯" in pwp:
+        if pwp is "¯\_(ツ)_/¯":
             await asyncio.sleep(2)
             await m.edit(content="¯\\\_(.\_.)\_/¯")
 
