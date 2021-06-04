@@ -86,7 +86,7 @@ class Main(commands.Cog):
             pwp = ["¯\_(ツ)_/¯"]
         pwp = random.choice(pwp)
         m = await ctx.send(pwp)
-        if m.content == "¯\_(ツ)_/¯":
+        if "¯\_(ツ)_/¯" in pwp:
             await asyncio.sleep(2)
             await m.edit(content="¯\_(._.)_/¯")
 
