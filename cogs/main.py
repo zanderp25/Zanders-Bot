@@ -38,7 +38,7 @@ class Main(commands.Cog):
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} said Hello!')
 
     @commands.command(hidden=True)
-    async def apple(ctx):
+    async def apple(self, ctx):
         await ctx.send("\uf8ff")
 
     @commands.command(aliases=['<:shut:751421349355978822>', "cmp_shut"])
