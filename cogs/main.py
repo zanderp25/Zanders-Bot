@@ -88,7 +88,7 @@ class Main(commands.Cog):
         m = await ctx.send(pwp)
         if "¯\_(ツ)_/¯" in pwp:
             await asyncio.sleep(2)
-            await m.edit(content="¯\_(._.)_/¯")
+            await m.edit(content="¯\\\_(.\_.)\_/¯")
 
     @commands.command(hidden=True)
     async def secret(self, ctx):
