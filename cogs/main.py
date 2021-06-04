@@ -79,6 +79,15 @@ class Main(commands.Cog):
             await ctx.message.delete()
         await ctx.send(f"{''.join(message)}")
 
+    @commands.command(name="-;", aliases=["(","😭"])
+    async def waaa(self, ctx):
+        pwp = [";-;","waaaaa","pwp","owo","*quietly judges you*","There, there...", "._.","¯\_(ツ)_/¯"])
+        pwp = random.choice(pwp)
+        m = await ctx.send(pwp)
+        if pwp is "¯\_(ツ)_/¯":
+            await asyncio.sleep(2)
+            await m.edit(content="¯\_(._.)_/¯")
+
     @commands.command(hidden=True)
     async def secret(self, ctx):
         '''Uhh... you're not supposed to see this
