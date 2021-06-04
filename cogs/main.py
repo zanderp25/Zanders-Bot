@@ -80,7 +80,7 @@ class Main(commands.Cog):
         await ctx.send(f"{''.join(message)}")
 
     @commands.command(name="-;", aliases=["(","😭"])
-    async def waaa(self, ctx, e:typing.Optional(bool)=False):
+    async def waaa(self, ctx, e:typing.Optional[bool]=False):
         pwp = [";-;","waaaaa","pwp","owo","*quietly judges you*","There, there...", "._.","¯\_(ツ)_/¯"]
         if e is True:
             pwp = ["¯\_(ツ)_/¯"]
