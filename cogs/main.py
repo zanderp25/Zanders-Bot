@@ -81,7 +81,7 @@ class Main(commands.Cog):
 
     @commands.command(name="-;", aliases=["(","😭"])
     async def waaa(self, ctx):
-        pwp = [";-;","waaaaa","pwp","owo","*quietly judges you*","There, there...", "._.","¯\_(ツ)_/¯"])
+        pwp = [";-;","waaaaa","pwp","owo","*quietly judges you*","There, there...", "._.","¯\_(ツ)_/¯"]
         pwp = random.choice(pwp)
         m = await ctx.send(pwp)
         if pwp is "¯\_(ツ)_/¯":
