@@ -2,9 +2,12 @@ import discord, io, textwrap, traceback, asyncio, inspect
 from discord.ext import commands
 from contextlib import redirect_stdout
 
-class REPL(commands.Cog):
+class Repl(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+        self._last_result = None
+        self.sessions = set()
     
     @staticmethod
     def cleanup_code(content):
@@ -162,4 +165,4 @@ class REPL(commands.Cog):
                 await ctx.send(f'Unexpected error: `{e}`')
 
 def setup(bot):
-    bot.add_cog(REPL(bot))
+    bot.add_cog(Repl(bot))
