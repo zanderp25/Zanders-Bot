@@ -4,7 +4,7 @@ from discord.ext import commands
 from jishaku.codeblocks import Codeblock, codeblock_converter
 
 
-class REPL(commands.Cog):
+class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
