@@ -89,11 +89,11 @@ class Repl(commands.Cog):
         }
 
         if ctx.channel.id in self.sessions:
-            await ctx.send('Already running a REPL session in this channel. Exit it with `quit`.')
+            await ctx.channel.send('Already running a REPL session in this channel. Exit it with `quit`.')
             return
 
         self.sessions.add(ctx.channel.id)
-        await ctx.send('Enter code to execute or evaluate. `exit()` or `quit` to exit.')
+        await ctx.channel.send('Enter code to execute or evaluate. `exit()` or `quit` to exit.')
 
         def check(m):
             return m.author.id == ctx.author.id and \
@@ -104,14 +104,14 @@ class Repl(commands.Cog):
             try:
                 response = await self.bot.wait_for('message', check=check, timeout=10.0 * 60.0)
             except asyncio.TimeoutError:
-                await ctx.send('Exiting REPL session.')
+                await ctx.channel.send('Exiting REPL session.')
                 self.sessions.remove(ctx.channel.id)
                 break
 
             cleaned = self.cleanup_code(response.content)
 
             if cleaned in ('quit', 'exit', 'exit()'):
-                await ctx.send('Exiting.')
+                await ctx.channel.send('Exiting.')
                 self.sessions.remove(ctx.channel.id)
                 return
 
@@ -129,7 +129,7 @@ class Repl(commands.Cog):
                 try:
                     code = compile(cleaned, '<repl session>', 'exec')
                 except SyntaxError as e:
-                    await ctx.send(self.get_syntax_error(e))
+                    await ctx.channel.send(self.get_syntax_error(e))
                     continue
 
             variables['message'] = response
@@ -156,13 +156,13 @@ class Repl(commands.Cog):
             try:
                 if fmt is not None:
                     if len(fmt) > 2000:
-                        await ctx.send('Content too big to be printed.', file=discord.File(fp=io.BytesIO(bytes(value)),filename='output.py'))
+                        await ctx.channel.send('Content too big to be printed.', file=discord.File(fp=io.BytesIO(bytes(value)),filename='output.py'))
                     else:
-                        await ctx.send(fmt)
+                        await ctx.channel.send(fmt)
             except discord.Forbidden:
                 pass
             except discord.HTTPException as e:
-                await ctx.send(f'Unexpected error: `{e}`')
+                await ctx.channel.send(f'Unexpected error: `{e}`')
 
 def setup(bot):
     bot.add_cog(Repl(bot))
