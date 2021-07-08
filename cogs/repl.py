@@ -156,7 +156,7 @@ class Repl(commands.Cog):
             try:
                 if fmt is not None:
                     if len(fmt) > 2000:
-                        await ctx.send('Content too big to be printed.')
+                        await ctx.send('Content too big to be printed.', file=discord.File(fp=io.BytesIO(bytes(value)),filename='output.py'))
                     else:
                         await ctx.send(fmt)
             except discord.Forbidden:
