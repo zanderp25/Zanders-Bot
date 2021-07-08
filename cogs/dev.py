@@ -32,10 +32,10 @@ class Dev(commands.Cog):
         await ctx.send(embed=embed)
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} disabled `;{command}`')
 
-    @commands.command()
-    @commands.is_owner()
-    async def eval(self,ctx, *, argument:codeblock_converter):
-        await self.bot.cogs["Jishaku"].jsk_python(ctx=ctx,argument=argument)
+    # @commands.command()
+    # @commands.is_owner()
+    # async def eval_(self,ctx, *, argument:codeblock_converter):
+    #     await self.bot.cogs["Jishaku"].jsk_python(ctx=ctx,argument=argument)
     
     @commands.command()
     @commands.is_owner()
