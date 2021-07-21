@@ -44,8 +44,7 @@ class Errors(commands.Cog):
                         icon_url=ctx.author.avatar_url
                     )
                 )
-            except:
-            pass
+            except: pass
 
         if isinstance(error, commands.CommandNotFound):
             await ctx.reply(f"Command not found.")
