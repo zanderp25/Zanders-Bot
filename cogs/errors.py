@@ -9,7 +9,7 @@ class Errors(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx:commands.Context, error:Exception):
         if isinstance(error, commands.CommandNotFound):
-            await ctx.send(f"Command not found.")
+            pass
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply(
                 embed=discord.Embed(title=f"{ctx.command.name} is missing an argument", 
