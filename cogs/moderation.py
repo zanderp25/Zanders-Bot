@@ -13,6 +13,7 @@ class Moderation(commands.Cog):
         f.close()
 
     async def check_hierarchy(
+        self,
         ctx: commands.Context,
         obj: typing.Union[discord.Member, discord.Role],
         *,
