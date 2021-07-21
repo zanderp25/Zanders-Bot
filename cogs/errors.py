@@ -11,11 +11,10 @@ class Errors(commands.Cog):
         if isinstance(error, commands.CommandNotFound):
             await ctx.reply(f"Command not found.")
         elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.reply(f"Missing required argument.")
             await ctx.reply(
                 embed=discord.Embed(title=f"{ctx.command.name} is missing an argument", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -24,7 +23,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"{ctx.command.name} is using an invalid argument", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -33,7 +32,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -42,7 +41,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"I don't have permission to do this", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -51,7 +50,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -60,7 +59,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"This command can't be used in private messages", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -69,7 +68,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"This command is disabled", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
@@ -78,7 +77,8 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"Error while executing command", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{ctx.command.signature}\n**Error:**```py\n{error}\n```"
+                description=f"**Usage:**\n{ctx.prefix}{ctx.command.name} {ctx.command.signature}\n"
+                    "**Error:**```py\n{error}\n```"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {ctx.command.name} for more info"
                 )
