@@ -10,6 +10,7 @@ class Errors(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx:commands.Context, error:Exception):
         parent_name = ' '.join(ctx.invoked_parents)
+        if parent_name != '': parent_name += ' '
         try:
             await ctx.message.add_reaction('🚫')
             await ctx.bot.get_channel(867254023617642497).send(
@@ -19,7 +20,8 @@ class Errors(commands.Cog):
                     description=f"```{error}```\n"
                     f"Author: {ctx.author} ({ctx.author.id})\n"
                     f"Channel: {ctx.channel} ({ctx.channel.id})\n"
-                    f"Guild: {ctx.guild} ({ctx.guild.id})\n", 
+                    f"Guild: {ctx.guild} ({ctx.guild.id})\n"
+                    f"Full message: ```{ctx.message.content}```\n", 
                     timestamp=ctx.message.created_at
                 ).set_author(
                     name=ctx.author.name, 
