@@ -36,6 +36,7 @@ class Errors(commands.Cog):
             try:
                 await ctx.message.add_reaction('🚫')
                 await ctx.bot.get_channel(867254023617642497).send(
+                    "<@511655498676699136>",
                     embed=discord.Embed(
                         color=discord.Color.red(), 
                         title=f"Error running {''.join(ctx.invoked_parents)} {ctx.invoked_with}:", 
