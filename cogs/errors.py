@@ -6,11 +6,14 @@ class Errors(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    @commands.guild_only()
-    @commands.cooldown(1, 2, commands.BucketType.user)
-    async def e(self, ctx):
-        pass
+    @commands.command(hidden=True)
+    @commands.is_owner()
+    @commands.command(name='error', aliases=['err', 'error'])
+    async def error(self, ctx, *, error: str):
+        """
+        Errors. That's all it does.
+        """
+        raise commands.errors.CommandInvokeError(error)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx:commands.Context, error:Exception):
