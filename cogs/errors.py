@@ -47,6 +47,15 @@ class Errors(commands.Cog):
                     text=f"Type {ctx.prefix}help {ctx.invoked_with} for more info"
                 )
             )
+        elif isinstance(error, guild.NotInGuild):
+            await ctx.reply(
+                embed=discord.Embed(title=f"You're not in the correct guild.", 
+                color=0xff0000,
+                description=f"**Usage:**\n{ctx.prefix}{ctx.invoked_with} {ctx.command.signature}"
+                ).set_footer(
+                    text=f"Type {ctx.prefix}help {ctx.invoked_with} for more info"
+                )
+            )
         elif isinstance(error, commands.CheckFailure):
             await ctx.reply(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
