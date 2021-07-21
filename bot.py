@@ -28,15 +28,6 @@ for cog in cogs:
         print(error)
 #bot.load_extension('riftgun')
 
-#tictactoe
-class tt():
-    table = [' ',' ',' ',' ',' ',' ',' ',' ',' ']
-    channel = ''
-    player = 1
-    newGame = True
-    p1 = ''
-    p2 = ''
-
 def log(x):
     print(x)
     f = open("bot.log", 'a')
