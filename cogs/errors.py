@@ -1,5 +1,5 @@
 import discord
-import guild
+from cogs import guild
 from discord.ext import commands
 from discord.ext.commands.core import command
 
