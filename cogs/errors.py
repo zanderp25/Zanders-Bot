@@ -18,10 +18,9 @@ class Errors(commands.Cog):
 
         if isinstance(error, commands.CommandOnCooldown):
             await ctx.message.add_reaction('🚫')
-            e = await ctx.send(f'{ctx.author.mention}, you\'re being ratelimited! Try again in {error.retry_after:.1f} seconds.')
+            await ctx.send(f'{ctx.author.mention}, you\'re being ratelimited! Try again in {error.retry_after:.1f} seconds.', delete_after=5)
             await asyncio.sleep(1)
             await ctx.message.remove_reaction('🚫', ctx.me)
-            await e.delete()
             return
 
         parent_name = ' '.join(ctx.invoked_parents)
