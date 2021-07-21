@@ -9,7 +9,7 @@ class Errors(commands.Cog):
     @commands.command(hidden=True)
     @commands.is_owner()
     @commands.command(name='error', aliases=['err', 'error'])
-    async def error(self, ctx, *, error: str):
+    async def make_error(self, ctx, *, error: str):
         """
         Errors. That's all it does.
         """
