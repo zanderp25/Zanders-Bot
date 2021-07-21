@@ -1,8 +1,6 @@
 import discord
-import asyncio
-from datetime import datetime
+import asyncio, typing
 from discord.ext import commands
-
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -14,37 +12,58 @@ class Moderation(commands.Cog):
         f.write('\n' + x)
         f.close()
 
+    async def check_hierarchy(
+        ctx: commands.Context,
+        obj: typing.Union[discord.Member, discord.Role],
+        *,
+        return_bool: bool = False,
+    ):
+        def err(thing):
+            if return_bool:
+                return False
+            raise commands.CheckFailure(f"{obj} is higher than {thing}!")
+
+        if ctx.bot.top_role <= getattr(obj, "top_role", obj):
+            return err("me")
+        if ctx.author.top_role <= getattr(obj, "top_role", obj):
+            return err("you")
+        return True
+
     @commands.command(aliases=["yeet"])
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *,reason="No reason given."):
         '''Kicks a user'''
-        if ctx.invoked_with == "yeet":
-            msg = await ctx.send(f"Yeeting member `{member}`")
-            await member.kick(reason=reason)
-            try:
-                await member.send(f"You have been kicked from {ctx.guild} for {reason}")
-            except: pass
-            await msg.edit(content=f"Succesfully yeeted. ***Y E E T !***")
-        else:
+        if await self.check_hierarchy(ctx, member, return_bool=True):
+            async def _kick(member):
+                await member.kick(reason=reason)
+                try:
+                    await member.send(f"You have been kicked from {ctx.guild} for {reason}")
+                except: pass
+            if ctx.invoked_with == "yeet":
+                msg = await ctx.send(f"Yeeting member `{member}`")
+                await _kick(member)
+                return await msg.edit(content=f"Succesfully yeeted. ***Y E E T !***")
             msg = await ctx.send(f"Kicking member `{member}`")
-            await member.kick(reason=reason)
-            try:
-                await member.send(f"You have been kicked from {ctx.guild} for {reason}")
-            except: pass
+            await _kick(member)
             await msg.edit(content=f"Succesfully kicked.")
+        else:
+            await ctx.send("You can't do that!")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *,reason="No reason given."):
         '''Bans a user'''
-        msg = await ctx.send(f"Banning member `{member}`")
-        await member.ban(reason=reason)
-        try:
-            await member.send(f"You have been banned from {ctx.guild} for {reason}")
-        except: pass
-        await msg.edit(content=f"Succesfully banned.")
+        if await self.check_hierarchy(ctx, member, return_bool=True):
+            msg = await ctx.send(f"Banning member `{member}`")
+            await member.ban(reason=reason)
+            try:
+                await member.send(f"You have been banned from {ctx.guild} for {reason}")
+            except: pass
+            await msg.edit(content=f"Succesfully banned.")
+        else:
+            await ctx.send("You can't do that!")
 
     @commands.command()
     @commands.bot_has_permissions(manage_channels=True)
