@@ -1,3 +1,4 @@
+from sys import hash_info
 import discord, random, asyncio
 from cogs import guild
 from discord.ext import commands
@@ -6,10 +7,9 @@ class Errors(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(hidden=True)
+    @commands.command(name='error', aliases=['err', 'error'], hidden=True)
     @commands.is_owner()
-    @commands.command(name='error', aliases=['err', 'error'])
-    async def make_error(self, ctx, *, error: str):
+    async def error(self, ctx, *, error: str):
         """
         Errors. That's all it does.
         """
