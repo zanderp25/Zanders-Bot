@@ -9,14 +9,14 @@ class Errors(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx:commands.Context, error:Exception):
-        parent_name = ' '.join(ctx.invoked_parents) if ctx.parent_command else ''
+        parent_name = ' '.join(ctx.invoked_parents)
         try:
             await ctx.message.add_reaction('🚫')
             await ctx.bot.get_channel(867254023617642497).send(
                 embed=discord.Embed(
                     color=discord.Color.red(), 
-                    title=f"Error running {parent_name} {ctx.invoked_with}:", 
-                    description=f"```\n{error}\n```\n"
+                    title=f"Error running {''.join(ctx.invoked_parents)} {ctx.invoked_with}:", 
+                    description=f"```{error}```\n"
                     f"Author: {ctx.author} ({ctx.author.id})\n"
                     f"Channel: {ctx.channel} ({ctx.channel.id})\n"
                     f"Guild: {ctx.guild} ({ctx.guild.id})\n", 
