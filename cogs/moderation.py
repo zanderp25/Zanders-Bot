@@ -24,7 +24,7 @@ class Moderation(commands.Cog):
                 return False
             raise commands.CheckFailure(f"{obj} is higher than {thing}!")
 
-        if ctx.bot.top_role <= getattr(obj, "top_role", obj):
+        if ctx.guild.me.top_role <= getattr(obj, "top_role", obj):
             return err("me")
         if ctx.author.top_role <= getattr(obj, "top_role", obj):
             return err("you")
