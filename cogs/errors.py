@@ -7,7 +7,7 @@ class Errors(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='error', aliases=['err'], hidden=True)
+    @commands.command(name='error', aliases=[], hidden=True)
     @commands.is_owner()
     async def error(self, ctx, *, error: typing.Optional[str]):
         """
