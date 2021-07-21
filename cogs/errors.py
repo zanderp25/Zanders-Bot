@@ -1,5 +1,5 @@
 from sys import hash_info
-import discord, random, asyncio
+import discord, asyncio, typing
 from cogs import guild
 from discord.ext import commands
 
@@ -9,7 +9,7 @@ class Errors(commands.Cog):
 
     @commands.command(name='error', aliases=['err'], hidden=True)
     @commands.is_owner()
-    async def error(self, ctx, *, error: str):
+    async def error(self, ctx, *, error: typing.Optional[str]):
         """
         Errors. That's all it does.
         """
