@@ -151,7 +151,7 @@ class Errors(commands.Cog):
                 embed=discord.Embed(title=f"Error while executing command", 
                 color=0xff0000,
                 description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}\n"
-                    "**Error:**```py\n{error}\n```"
+                    f"**Error:**```py\n{error}\n```"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
