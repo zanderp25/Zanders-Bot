@@ -26,7 +26,7 @@ class Errors(commands.Cog):
             await ctx.message.remove_reaction('🚫', ctx.me)
             return
 
-        parent_name = ' '.join(ctx.invoked_parents)
+        parent_name = ' '.join(ctx.invoked_parents) if ctx.command.full_parent_name = '' else ''
         if parent_name != '': parent_name += ' '
 
         if not type(error) in [
