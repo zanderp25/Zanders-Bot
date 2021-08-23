@@ -39,7 +39,7 @@ class Errors(commands.Cog):
                     "<@511655498676699136>",
                     embed=discord.Embed(
                         color=discord.Color.red(), 
-                        title=f"Error running {''.join(ctx.invoked_parents)} {ctx.invoked_with}:", 
+                        title=f"Error running {parent_name}{ctx.invoked_with}:", 
                         description=f"```{error}```\n"
                         f"Author: {ctx.author} ({ctx.author.id})\n"
                         f"Channel: {ctx.channel} ({ctx.channel.id})\n"
@@ -141,7 +141,7 @@ class Errors(commands.Cog):
                 embed=discord.Embed(title=f"Error while executing command", 
                 color=0xff0000,
                 description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}\n"
-                    "**Error:**```py\n{error}\n```"
+                    "**Error:**```py\n" f"{error}" "\n```"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
@@ -151,7 +151,7 @@ class Errors(commands.Cog):
                 embed=discord.Embed(title=f"Error while executing command", 
                 color=0xff0000,
                 description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}\n"
-                    f"**Error:**```py\n{error}\n```"
+                    "**Error:**```py\n" f"{error}" "\n```"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
