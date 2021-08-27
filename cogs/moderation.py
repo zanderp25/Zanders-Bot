@@ -94,7 +94,16 @@ class Moderation(commands.Cog):
         await asyncio.sleep(2)
         await msg.delete()
     
-
+    @commands.command()
+    @commands.bot_has_permissions(manage_messages=True)
+    @commands.has_permissions(manage_messages=True)
+    async def purgefrom(self, ctx, id:discord.Message):
+        '''Purges messages after the specified message, with a limit of 500'''
+        await ctx.message.delete()
+        n = await ctx.channel.purge(after=id)
+        msg = await ctx.send(f"Deleted {len(n)} messages.")
+        await asyncio.sleep(2)
+        await msg.delete()
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
