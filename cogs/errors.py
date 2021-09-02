@@ -1,5 +1,5 @@
 from sys import hash_info
-import discord, asyncio, typing
+import discord, asyncio, typing, traceback
 from cogs import guild
 from discord.ext import commands
 
@@ -34,20 +34,20 @@ class Errors(commands.Cog):
             commands.CommandOnCooldown,
         ]:
             try:
+                trace = "\n".join(traceback.format_exception(type(error), error, error.__traceback__))
                 await ctx.message.add_reaction('🚫')
                 await ctx.bot.get_channel(867254023617642497).send(
-                    "<@511655498676699136>",
                     embed=discord.Embed(
                         color=discord.Color.red(), 
                         title=f"Error running {parent_name}{ctx.invoked_with}:", 
-                        description=f"```{error}```\n"
+                        description=f"```\n{trace}\n```\n"
                         f"Author: {ctx.author} ({ctx.author.id})\n"
                         f"Channel: {ctx.channel} ({ctx.channel.id})\n"
                         f"Guild: {ctx.guild} ({ctx.guild.id})\n"
                         f"Full message: ```{ctx.message.content}```\n", 
                         timestamp=ctx.message.created_at
                     ).set_author(
-                        name=ctx.author.name, 
+                        name=f"{ctx.author} ({ctx.author.id})", 
                         icon_url=ctx.author.avatar_url
                     )
                 )
