@@ -77,7 +77,7 @@ class Main(commands.Cog):
         '''Like the shell echo command'''
         if hide:
             await ctx.message.delete()
-        await ctx.send(f"{''.join(message)}")
+        await ctx.channel.send(f"{''.join(message)}")
 
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx, e:typing.Optional[bool]=False):
