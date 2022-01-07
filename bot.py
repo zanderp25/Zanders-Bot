@@ -37,7 +37,7 @@ def log(x):
 
 @bot.event
 async def on_ready():
-    bot.msg_del_emoji = '<:major_outage:803672907724226621>'
+    # bot.msg_del_emoji = '<:major_outage:803672907724226621>'
     time = datetime.datetime.now()
     log(f'{time} - Bot is logged in as {bot.user}')
 
