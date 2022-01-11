@@ -1,6 +1,5 @@
 import discord, re
 from discord.ext import commands
-from discord.flags import alias_flag_value
 
 class SquareDraw(commands.Converter):
   async def convert(self, ctx, arg):
