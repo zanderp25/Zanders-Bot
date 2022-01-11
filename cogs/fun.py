@@ -1,7 +1,6 @@
-import discord, typing, random, asyncio
-from datetime import datetime
+import discord, re
 from discord.ext import commands
-import re
+from discord.flags import alias_flag_value
 
 class SquareDraw(commands.Converter):
   async def convert(self, ctx, arg):
@@ -30,7 +29,7 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=["sd", "sq", "square", "draw"])
     async def squaredraw(self, ctx, *lines: SquareDraw):
         '''
             Draws an image with emoji squares.
@@ -39,10 +38,11 @@ class Fun(commands.Cog):
             How to use:
                 Use a letter below to represent the color of each square, and a number following the letter
                 to represent the number of squares of that color. The number of squares is optional.
+                (Space also works as a line separator.)
                 Example:
                     `k2r3k2`
                 You can also use groups, like this:
-                    `(3x(k2r3k2))`
+                    `(3x(k2r3k2;))`
 
             Colors:
                 - k - black
@@ -53,14 +53,14 @@ class Fun(commands.Cog):
                 - g - green
                 - p - purple
                 - n - brown
-                - ; - newline (or space)              
+                - ; - newline             
             
             Example:
                 `;squaredraw (4x(4xkw);(4xwk);)`
         '''
         return await ctx.send(embed=discord.Embed(title='Here\'s your monster', description='\n'.join(lines)))
 
-    @commands.command()
+    @commands.command(aliases=["pop", "bubble", "bubblewrap"])
     async def bubbles(self, ctx, width:int, height:int):
         '''
             Shows you virtual bubble wrap with a given width and height.
