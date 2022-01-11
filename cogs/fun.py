@@ -47,6 +47,7 @@ class Fun(commands.Cog):
                 - k - black
                 - w - white
                 - r - red
+                - b - blue
                 - o - orange
                 - y - yellow
                 - g - green
