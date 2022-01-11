@@ -74,7 +74,7 @@ class Fun(commands.Cog):
         '''
         width = width if 0<width<=10 else 10
         height = height if 0<height <=20 else 20
-        await ctx.send((('pop'*width)+'\n')*height)
+        await ctx.send((('||pop||'*width)+'\n')*height)
 
 def setup(bot):
     bot.add_cog(Fun(bot))
