@@ -118,15 +118,6 @@ class Errors(commands.Cog):
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
             )
-        elif isinstance(error, commands.CommandOnCooldown):
-            await ctx.reply(
-                embed=discord.Embed(title=f"This command is on cooldown", 
-                color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
-                ).set_footer(
-                    text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
-            )
         elif isinstance(error, commands.CheckFailure):
             await ctx.reply(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
