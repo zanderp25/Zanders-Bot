@@ -1,6 +1,6 @@
 from sys import hash_info
 import discord, asyncio, typing, traceback
-from cogs import guild
+from cogs import guild, moderation
 from discord.ext import commands
 
 class Errors(commands.Cog):
@@ -67,6 +67,15 @@ class Errors(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply(
                 embed=discord.Embed(title=f"{parent_name}{ctx.invoked_with} is missing an argument", 
+                color=0xff0000,
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                ).set_footer(
+                    text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
+                )
+            )
+        elif isinstance(error, moderation.MemberIsInGuild):
+            await ctx.reply(
+                embed=discord.Embed(title=f"No need to hackban someone who is already in the guild.", 
                 color=0xff0000,
                 description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
                 ).set_footer(
