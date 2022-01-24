@@ -55,6 +55,15 @@ class Errors(commands.Cog):
 
         if isinstance(error, commands.CommandNotFound):
             await ctx.reply(f"Command not found.")
+        elif isinstance(error, commands.MemberNotFound):
+            await ctx.reply(
+                embed=discord.Embed(title=f"The member you are trying to {ctx.command.name} does not exist.", 
+                color=0xff0000,
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                ).set_footer(
+                    text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
+                )
+            )
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply(
                 embed=discord.Embed(title=f"{parent_name}{ctx.invoked_with} is missing an argument", 
