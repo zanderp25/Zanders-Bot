@@ -1,4 +1,4 @@
-import discord, typing, random, asyncio
+import discord, typing
 from datetime import datetime
 from discord.ext import commands
 
@@ -14,7 +14,7 @@ class Main(commands.Cog):
         f.close()
 
     @commands.command(aliases=["こんにちは", "hola"])
-    async def hello(self, ctx):
+    async def hello(self, ctx: commands.Context):
         '''Hello to you, too!
         This command is available in these languages:
         en, es, ja'''
@@ -38,18 +38,18 @@ class Main(commands.Cog):
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} said Hello!')
 
     @commands.command(hidden=True)
-    async def apple(self, ctx):
+    async def apple(self, ctx: commands.Context):
         await ctx.send("\uf8ff")
 
     @commands.command(aliases=['<:shut:751421349355978822>', "cmp_shut"])
-    async def shut(self, ctx):
+    async def shut(self, ctx: commands.Context):
         '''cmp shut'''
         time = datetime.now()
         await ctx.send(f'<:shut:751421349355978822>')
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author}  said cmp shut')
 
     @commands.command()
-    async def time(self, ctx):
+    async def time(self, ctx: commands.Context):
         '''Shows the localtime of the bot (EST) and UTC time.'''
         time = datetime.now()
         utctime = datetime.utcnow()
@@ -57,14 +57,14 @@ class Main(commands.Cog):
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} Requested the time')
 
     @commands.command()
-    async def ping(self, ctx):
+    async def ping(self, ctx: commands.Context):
         '''Test the latency of the bot'''
         time = datetime.now()
         await ctx.send('Pong! `' + str(round(self.bot.latency * 1000)) + ' ms` <a:party_parrot:720424857699090464>')
         await self.log(f'{time} - Pinged by {ctx.author} in {ctx.guild} / #{ctx.channel} | Ponged with {round(self.bot.latency*1000)} ms')
 
     @commands.command(aliases=['log'])
-    async def say(self, ctx, *, arg:str):
+    async def say(self, ctx: commands.Context, *, arg:str):
         '''Say something to the bot'''
         time = datetime.now()
         embed = discord.Embed(title = f"{ctx.author} said something...", description = f"{arg}", color = 0x0000e0)
@@ -73,40 +73,23 @@ class Main(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def echo(self, ctx, hide:typing.Optional[bool]=False, *, message:str):
+    async def echo(self, ctx: commands.Context, hide:typing.Optional[bool]=False, *, message:str):
         '''Like the shell echo command'''
         if hide:
             await ctx.message.delete()
         await ctx.channel.send(f"{''.join(message)}")
 
-    @commands.command(name="-;", aliases=["(","😭"], hidden=True)
-    async def waaa(self, ctx, e:typing.Optional[bool]=False):
-        pwp = [
-            ";-;",
-            "waaaaa",
-            "pwp",
-            "owo",
-            "*quietly judges you*",
-            "There, there...", 
-            "._.",
-            "¯\_(ツ)_/¯",
-        ]
-        pwp = random.choice(pwp)
-        m = await ctx.send(pwp)
-        if pwp is "¯\_(ツ)_/¯":
-            await asyncio.sleep(2)
-            await m.edit(content="¯\\\_(.\_.)\_/¯")
-
-    @commands.command(hidden=True)
-    async def secret(self, ctx):
-        '''Uhh... you're not supposed to see this
-        
-        Well... I guess you see it now... This is a command that provides a link to a website that has a 1 in 50 chance to reveal a secret.
-        ||Maybe something else, too.||'''
-        time = datetime.now()
-        await ctx.channel.send(embed = discord.Embed(title = "1 in 50 Chance", description = f'[Reveal Secret](https://zanderp25.com/secret)'))
-        await ctx.message.delete()
-        await self.log(f'{time} - {ctx.author} got Rick-Rolled in {ctx.guild} / #{ctx.channel}')
+    @commands.command()
+    async def avatar(self, ctx: commands.Context, *, member:discord.Member=None):
+        '''Gets the avatar of a user'''
+        if member is None:
+            member = ctx.author
+        await ctx.send(
+            embed = discord.Embed(
+                title = f"{member}'s avatar", 
+                color = 0x0000e0
+            )
+        ).set_image(url = member.avatar.url)
 
 def setup(bot):
     bot.add_cog(Main(bot))
