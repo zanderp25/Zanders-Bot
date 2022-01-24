@@ -114,7 +114,6 @@ class Moderation(commands.Cog):
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, user:discord.User, *,reason="No reason given."):
         '''Unbans a user'''
-        await ctx.message.delete()
         await ctx.guild.unban(user, reason=reason)
         await ctx.send(f"Unbanned {user}")
 
@@ -126,7 +125,6 @@ class Moderation(commands.Cog):
         if user.id in [x.id for x in ctx.guild.members]:
             raise MemberIsInGuild("That user is in the server!")
         else:
-            await ctx.message.delete()
             await ctx.guild.ban(user, reason=reason)
             await ctx.send(f"Banned {user}")
 
