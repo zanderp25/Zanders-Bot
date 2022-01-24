@@ -2,6 +2,10 @@ import discord
 import asyncio, typing
 from discord.ext import commands
 
+class MemberIsInGuild(commands.BadArgument):
+    def __init__(self, message: typing.Optional[str] = None, *args: typing.Any) -> None:
+        super().__init__(message, *args)
+
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -104,6 +108,27 @@ class Moderation(commands.Cog):
         msg = await ctx.send(f"Deleted {len(n)} messages.")
         await asyncio.sleep(2)
         await msg.delete()
+
+    @commands.command()
+    @commands.bot_has_permissions(ban_members=True)
+    @commands.has_permissions(ban_members=True)
+    async def unban(self, ctx, user:discord.User, *,reason="No reason given."):
+        '''Unbans a user'''
+        await ctx.message.delete()
+        await ctx.guild.unban(user, reason=reason)
+        await ctx.send(f"Unbanned {user}")
+
+    @commands.command()
+    @commands.bot_has_permissions(ban_members=True)
+    @commands.has_permissions(ban_members=True)
+    async def hackban(self, ctx, user:discord.User, *,reason="No reason given."):
+        '''Bans a user that is not in the server'''
+        if user.id in [x.id for x in ctx.guild.members]:
+            raise MemberIsInGuild("That user is in the server!")
+        else:
+            await ctx.message.delete()
+            await ctx.guild.ban(user, reason=reason)
+            await ctx.send(f"Banned {user}")
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
