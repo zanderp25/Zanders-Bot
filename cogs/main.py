@@ -88,7 +88,7 @@ class Main(commands.Cog):
             embed = discord.Embed(
                 title = f"{member}'s avatar", 
                 color = 0x0000e0
-            ).set_image(url = member.avatar.url)
+            ).set_image(url = member.avatar_url)
         )
 
 def setup(bot):
