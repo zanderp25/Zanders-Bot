@@ -1,3 +1,4 @@
+from ast import alias
 import discord, typing
 from datetime import datetime
 from discord.ext import commands
@@ -63,6 +64,18 @@ class Main(commands.Cog):
         await ctx.send('Pong! `' + str(round(self.bot.latency * 1000)) + ' ms` <a:party_parrot:720424857699090464>')
         await self.log(f'{time} - Pinged by {ctx.author} in {ctx.guild} / #{ctx.channel} | Ponged with {round(self.bot.latency*1000)} ms')
 
+    @commands.command(aliases=["av"])
+    async def avatar(self, ctx: commands.Context, *, member:discord.Member=None):
+        '''Gets the avatar of a user'''
+        if member is None:
+            member = ctx.author
+        await ctx.send(
+            embed = discord.Embed(
+                title = f"{member}'s avatar", 
+                color = 0x0000e0
+            ).set_image(url = member.avatar_url)
+        )
+
     @commands.command(aliases=['log'])
     async def say(self, ctx: commands.Context, *, arg:str):
         '''Say something to the bot'''
@@ -78,18 +91,6 @@ class Main(commands.Cog):
         if hide:
             await ctx.message.delete()
         await ctx.channel.send(f"{''.join(message)}")
-
-    @commands.command()
-    async def avatar(self, ctx: commands.Context, *, member:discord.Member=None):
-        '''Gets the avatar of a user'''
-        if member is None:
-            member = ctx.author
-        await ctx.send(
-            embed = discord.Embed(
-                title = f"{member}'s avatar", 
-                color = 0x0000e0
-            ).set_image(url = member.avatar_url)
-        )
 
 def setup(bot):
     bot.add_cog(Main(bot))
