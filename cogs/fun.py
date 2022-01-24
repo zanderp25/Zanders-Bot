@@ -59,7 +59,10 @@ class Fun(commands.Cog):
             Example:
                 `;squaredraw (4x(4xkw);(4xwk);)`
         '''
-        return await ctx.send(embed=discord.Embed(title='Here\'s your monster', description='\n'.join(lines)))
+        text = "\n".join(lines)
+        if len("".join(lines)) > 200:
+            text = f"```\n{text}```"
+        return await ctx.send(embed=discord.Embed(title='Here\'s your monster', description=text))
 
     @commands.command(aliases=["pop", "bubble", "bubblewrap"])
     async def bubbles(self, ctx, width:int, height:int):
@@ -72,7 +75,7 @@ class Fun(commands.Cog):
         '''
         width = width if 0<width<=10 else 10
         height = height if 0<height <=20 else 20
-        await ctx.send((('pop'*width)+'\n')*height)
+        await ctx.send((('||pop||'*width)+'\n')*height)
 
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx, e:typing.Optional[bool]=False):
