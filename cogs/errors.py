@@ -20,10 +20,10 @@ class Errors(commands.Cog):
         '''The command handler'''
 
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.message.add_reaction('🚫')
+            await ctx.message.add_reaction('⏱')
             await ctx.send(f'{ctx.author.mention}, you\'re being ratelimited! Try again in {error.retry_after:.1f} seconds.', delete_after=5)
             await asyncio.sleep(1)
-            await ctx.message.remove_reaction('🚫', ctx.me)
+            await ctx.message.remove_reaction('⏱', ctx.me)
             return
 
         parent_name = (' '.join(ctx.invoked_parents) if ctx.command.full_parent_name != '' else '')
@@ -55,6 +55,15 @@ class Errors(commands.Cog):
 
         if isinstance(error, commands.CommandNotFound):
             await ctx.reply(f"Command not found.")
+        elif isinstance(error, commands.MemberNotFound):
+            await ctx.reply(
+                embed=discord.Embed(title=f"The member you are trying to {ctx.command.name} does not exist.", 
+                color=0xff0000,
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                ).set_footer(
+                    text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
+                )
+            )
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply(
                 embed=discord.Embed(title=f"{parent_name}{ctx.invoked_with} is missing an argument", 
@@ -109,20 +118,11 @@ class Errors(commands.Cog):
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
             )
-        elif isinstance(error, commands.CommandOnCooldown):
-            await ctx.reply(
-                embed=discord.Embed(title=f"This command is on cooldown", 
-                color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
-                ).set_footer(
-                    text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
-            )
         elif isinstance(error, commands.CheckFailure):
             await ctx.reply(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                # description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
@@ -131,7 +131,7 @@ class Errors(commands.Cog):
             await ctx.reply(
                 embed=discord.Embed(title=f"This command is disabled", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                # description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
