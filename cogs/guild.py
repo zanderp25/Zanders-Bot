@@ -9,7 +9,7 @@ class NotInGuild(commands.CheckFailure):
     def __init__(self, message):
         super().__init__(message)
 
-class Main(commands.Cog):
+class Guild(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -100,4 +100,4 @@ class Main(commands.Cog):
             await ctx.send("Try in <#755948130356297768>")
 
 def setup(bot):
-    bot.add_cog(Main(bot))
+    bot.add_cog(Guild(bot))

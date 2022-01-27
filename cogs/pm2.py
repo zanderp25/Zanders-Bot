@@ -138,10 +138,10 @@ class PM2(commands.Cog):
             color=0x00ff00,
         ).set_author(
             name=ctx.me.display_name,
-            icon_url=ctx.me.avatar_url,
+            icon_url=ctx.me.avatar.url,
         ).set_footer(
             text=f"Requested by {ctx.author}",
-            icon_url=ctx.author.avatar_url,
+            icon_url=ctx.author.avatar.url,
         )
         return await ctx.send(embed=embed)
 

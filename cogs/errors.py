@@ -48,7 +48,7 @@ class Errors(commands.Cog):
                         timestamp=ctx.message.created_at
                     ).set_author(
                         name=f"{ctx.author} ({ctx.author.id})", 
-                        icon_url=ctx.author.avatar_url
+                        icon_url=ctx.author.avatar.url
                     )
                 )
             except: pass
