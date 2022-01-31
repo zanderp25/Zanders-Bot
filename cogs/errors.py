@@ -73,6 +73,16 @@ class Errors(commands.Cog):
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
             )
+        elif isinstance(error, discord.errors.Forbidden):
+            await ctx.reply(
+                embed=discord.Embed(title=f"I do not have permission to do this.", 
+                color=0xff0000,
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                f"\n**Error:** ```{error}```"
+                ).set_footer(
+                    text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
+                )
+            )
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.reply(
                 embed=discord.Embed(title=f"{parent_name}{ctx.invoked_with} is missing an argument", 
