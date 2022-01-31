@@ -73,7 +73,7 @@ class Errors(commands.Cog):
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
                 )
             )
-        elif isinstance(error, discord.errors.Forbidden):
+        elif "403 Forbidden (error code: 50013): Missing Permissions" in str(error):
             await ctx.reply(
                 embed=discord.Embed(title=f"I do not have permission to do this.", 
                 color=0xff0000,
