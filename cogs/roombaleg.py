@@ -53,8 +53,8 @@ class RoombaLeg(commands.Cog):
                 title = f"Channel deleted:", 
                 description = f"Channel: {channel.name} ({channel.id})\n"
                 f"Type: {channel.type}\n"
-                (f"New channel: {newchan.name} ({newchan.mention})" \
-                    if newchan != None else "Could not identify the channel type, could not create a new one."),
+                f"New channel: {newchan.name} ({newchan.mention})" \
+                    if newchan != None else "Could not identify the channel type, could not create a new one.",
                 timestamp = datetime.now()
             ).set_author(
                 name=f"{channel.guild.get_member(channel.guild.owner_id)} ({channel.guild.owner_id})", 
