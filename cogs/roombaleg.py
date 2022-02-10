@@ -53,7 +53,7 @@ class RoombaLeg(commands.Cog):
                 title = f"Channel Deleted", 
                 description = f"Channel: {channel.name} ({channel.id})\n"
                 f"Type: {channel.type}\n"
-                f"User: {(await channel.guild.audit_logs(limit=1,action=discord.AuditLogAction.channel_delete).flatten())[0].user}"
+                f"User: {(await channel.guild.audit_logs(limit=1,action=discord.AuditLogAction.channel_delete).flatten())[0].user.mention}\n"
                 f"New channel: {newchan.name} ({newchan.mention})" \
                     if newchan != None else "Could not identify the channel type, could not create a new one.",
                 timestamp = datetime.now()
