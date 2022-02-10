@@ -47,7 +47,7 @@ class RoombaLeg(commands.Cog):
             for c in channel.channels:
                 await c.edit(category=newchan)
         else: newchan = None
-        await channel.guild.get_channel(discord.utils.get(channel.guild.channels,name="welcome",type=discord.ChannelType.text)).send(
+        await discord.utils.get(channel.guild.channels,name="welcome",type=discord.ChannelType.text).send(
             embed = discord.Embed(
                 color = discord.Color.red(), 
                 title = f"Channel deleted:", 
