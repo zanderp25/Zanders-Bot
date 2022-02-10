@@ -29,23 +29,15 @@ class RoombaLeg(commands.Cog):
                 position = channel.position,
                 reason = "Auto remake deleted channel",
                 )
-        elif channel.type == discord.ChannelType.stage_voice:
-            newchan = await channel.guild.create_stage_channel(
-                name = channel.name, 
-                category = channel.category,
-                overwrites=channel.overwrites,
-                position = channel.position,
-                reason = "Auto remake deleted channel",
-                )
         elif channel.type == discord.ChannelType.category:
             newchan = await channel.guild.create_category_channel(
                 name = channel.name, 
                 overwrites = channel.overwrites,
                 position = channel.position,
-                reason = "Auto remake deleted channel",
+                reason = "Auto remake deleted category",
                 )
             for c in channel.channels:
-                await c.edit(category=newchan)
+                await c.edit(parent_id=newchan.id)
         else: newchan = None
         await discord.utils.get(channel.guild.channels,name="welcome",type=discord.ChannelType.text).send(
             embed = discord.Embed(
