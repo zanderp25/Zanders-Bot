@@ -14,25 +14,35 @@ class RoombaLeg(commands.Cog):
                 name = channel.name, 
                 category = channel.category,
                 topic = channel.topic,
-                overwrites=channel.overwrites
+                overwrites=channel.overwrites,
+                position = channel.position,
+                reason = "Auto remake deleted channel",
                 )
             await newchan.send("smh this channel was deleted")
         elif channel.type == discord.ChannelType.voice:
             newchan = await channel.guild.create_voice_channel(
                 name = channel.name, 
                 category = channel.category,
-                overwrites=channel.overwrites
+                overwrites = channel.overwrites,
+                bitrate = channel.bitrate,
+                user_limit = channel.user_limit,
+                position = channel.position,
+                reason = "Auto remake deleted channel",
                 )
         elif channel.type == discord.ChannelType.stage_voice:
             newchan = await channel.guild.create_stage_channel(
                 name = channel.name, 
                 category = channel.category,
-                overwrites=channel.overwrites
+                overwrites=channel.overwrites,
+                position = channel.position,
+                reason = "Auto remake deleted channel",
                 )
         elif channel.type == discord.ChannelType.category:
             newchan = await channel.guild.create_category_channel(
                 name = channel.name, 
-                overwrites=channel.overwrites
+                overwrites = channel.overwrites,
+                position = channel.position,
+                reason = "Auto remake deleted channel",
                 )
             for c in channel.channels:
                 await c.edit(category=newchan)
