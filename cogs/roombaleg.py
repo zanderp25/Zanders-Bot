@@ -8,6 +8,7 @@ class RoombaLeg(commands.Cog):
 
     @commands.Cog.listener(name="on_guild_channel_delete")
     async def on_guild_channel_delete(self: commands.Context, channel: discord.abc.GuildChannel):
+        if channel.guild.id != 760908868737302528: return
         if channel.type == discord.ChannelType.text:
             newchan = await channel.guild.create_text_channel(
                 name = channel.name, 
