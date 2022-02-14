@@ -92,7 +92,7 @@ class Guild(commands.Cog):
             ch = ctx.guild.get_channel(751903455106433184)
             for channel in ch.channels:
                 if channel.name == str(ctx.author):
-                    await ctx.send(embed=discord.Embed(name=ctx.author, title="Voice Channel Exists", description="You already have a voice channel! Why would you want another?", color=discord.Color.red()))
+                    await ctx.send(embed=discord.Embed(title="Voice Channel Exists", description="You already have a voice channel! Why would you want another?", color=discord.Color.red()).set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url))
                     return
             await ch.create_voice_channel(name=str(ctx.author), overwrites={ctx.author:discord.PermissionOverwrite(view_channel=True, connect=True), ctx.guild.default_role:discord.PermissionOverwrite(view_channel=False, connect=False)})
             await ctx.send(embed=discord.Embed(title="Voice Channel Created", description="You now have a voice channel of your own. :) Good luck finding it lol", color=discord.Color.green()).set_author(name=ctx.author, icon_url=ctx.author.avatar.url))
