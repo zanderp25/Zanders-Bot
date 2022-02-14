@@ -95,7 +95,7 @@ class Guild(commands.Cog):
                     await ctx.send(embed=discord.Embed(name=ctx.author, title="Voice Channel Exists", description="You already have a voice channel! Why would you want another?", color=discord.Color.red()))
                     return
             await ch.create_voice_channel(name=str(ctx.author), overwrites={ctx.author:discord.PermissionOverwrite(view_channel=True, connect=True), ctx.guild.default_role:discord.PermissionOverwrite(view_channel=False, connect=False)})
-            await ctx.send(embed=discord.Embed(name=ctx.author, title="Voice Channel Created", description="You now have a voice channel of your own. :) Good luck finding it lol", color=discord.Color.green()))
+            await ctx.send(embed=discord.Embed(title="Voice Channel Created", description="You now have a voice channel of your own. :) Good luck finding it lol", color=discord.Color.green()).set_author(name=ctx.author, icon_url=ctx.author.avatar.url))
         else:
             await ctx.send("Try in <#755948130356297768>")
 
