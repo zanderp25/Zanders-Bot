@@ -2,67 +2,9 @@ import discord, re, typing, random, asyncio
 from datetime import datetime
 from discord.ext import commands
 
-class SquareDraw(commands.Converter):
-  async def convert(self, ctx, arg):
-    arg = str(arg)
-    ks = "kwrboygpn;"
-    squares = dict(zip(ks, "⬛⬜🟥🟦🟧🟨🟩🟪🟫\n"))
-    sec = rf"([{ks}])(\d+)?"
-    primreg = re.compile(rf"\((\d+)x(({sec})+)\)", flags=re.IGNORECASE |re.MULTILINE)
-    while (it:=list(primreg.finditer(arg))):
-      for m in it:
-        print(arg)
-        arg=arg.replace(m.group(0), m.group(2)*int(m.group(1)))
-    reg = re.compile(sec, flags=re.IGNORECASE|re.MULTILINE)
-    matches = reg.finditer(arg)
-    if not matches:
-        return "blank"
-    line = ""
-    for m in matches:
-        print(arg)
-        k, n = m.groups();n=n or 1
-        line += squares[k.lower()] * int(n)
-    return line
-
-
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.command(aliases=["sd", "sq", "square", "draw"])
-    async def squaredraw(self, ctx, *lines: SquareDraw):
-        '''
-            Draws an image with emoji squares.
-            Made by Clari (💜Clari#7744)
-
-            How to use:
-                Use a letter below to represent the color of each square, and a number following the letter
-                to represent the number of squares of that color. The number of squares is optional.
-                (Space also works as a line separator.)
-                Example:
-                    `k2r3k2`
-                You can also use groups, like this:
-                    `(3x(k2r3k2;))`
-
-            Colors:
-                - k - black
-                - w - white
-                - r - red
-                - b - blue
-                - o - orange
-                - y - yellow
-                - g - green
-                - p - purple
-                - n - brown
-                - ; - newline             
-            
-            Example:
-                `;squaredraw (4x(4xkw);(4xwk);)`
-        '''
-        text = "\n".join(lines)
-        if len("".join(lines)) > 200:
-            text = f"```\n{text}```"
-        return await ctx.send(embed=discord.Embed(title='Here\'s your monster', description=text))
 
     @commands.command(aliases=["pop", "bubble", "bubblewrap"])
     async def bubbles(self, ctx, width:int, height:int):
