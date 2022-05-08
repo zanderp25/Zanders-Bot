@@ -5,7 +5,7 @@ from jishaku.codeblocks import Codeblock, codeblock_converter
 
 
 class Dev(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     async def log(self, x):
@@ -40,7 +40,7 @@ class Dev(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def sh(self,ctx, *, argument:codeblock_converter):
-        await self.bot.cogs["Jishaku"].jsk_shell(ctx=ctx,argument=argument)
+        await self.bot.cogs["Jishaku"].jsk_shell(ctx,argument=argument)
 
     @commands.command()
     @commands.is_owner()
@@ -193,6 +193,11 @@ class Dev(commands.Cog):
                     color=colours["create"]
                 ))
                 return
+
+    @commands.command()
+    async def ttt_pull(self, ctx):
+        await self.bot.cogs["Jishaku"].jsk_shell(ctx,argument=codeblock_converter("pm2 pull 9"))
+        await self.bot.cogs["Jishaku"].jsk_shell(ctx,argument=codeblock_converter("pm2 reload 9"))
 
 def setup(bot):
     bot.add_cog(Dev(bot))
