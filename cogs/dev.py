@@ -198,7 +198,6 @@ class Dev(commands.Cog):
     @commands.is_owner()
     async def ttt_pull(self, ctx):
         await self.bot.cogs["Jishaku"].jsk_shell(ctx,argument=codeblock_converter("pm2 pull 9"))
-        await self.bot.cogs["Jishaku"].jsk_shell(ctx,argument=codeblock_converter("pm2 reload 9"))
 
 def setup(bot):
     bot.add_cog(Dev(bot))
