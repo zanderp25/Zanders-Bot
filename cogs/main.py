@@ -92,5 +92,5 @@ class Main(commands.Cog):
             await ctx.message.delete()
         await ctx.channel.send(f"{''.join(message)}")
 
-def setup(bot):
-    bot.add_cog(Main(bot))
+async def setup(bot):
+    await bot.add_cog(Main(bot))

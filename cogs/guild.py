@@ -99,5 +99,5 @@ class Guild(commands.Cog):
         else:
             await ctx.send("Try in <#755948130356297768>")
 
-def setup(bot):
-    bot.add_cog(Guild(bot))
+async def setup(bot):
+    await bot.add_cog(Guild(bot))

@@ -164,5 +164,5 @@ class Repl(commands.Cog):
             except discord.HTTPException as e:
                 await ctx.channel.send(f'Unexpected error: `{e}`')
 
-def setup(bot):
-    bot.add_cog(Repl(bot))
+async def setup(bot):
+    await bot.add_cog(Repl(bot))

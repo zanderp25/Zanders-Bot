@@ -1,4 +1,4 @@
-import discord, re, typing, random, asyncio
+import discord, typing, random, asyncio, aiohttp
 from datetime import datetime
 from discord.ext import commands
 
@@ -20,7 +20,7 @@ class Fun(commands.Cog):
         await ctx.send((('||pop||'*width)+'\n')*height)
 
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
-    async def waaa(self, ctx, e:typing.Optional[bool]=False):
+    async def waaa(self, ctx):
         pwp = [
             ";-;",
             "waaaaa",
@@ -37,16 +37,48 @@ class Fun(commands.Cog):
             await asyncio.sleep(2)
             await m.edit(content="¯\\\_(.\_.)\_/¯")
 
-    @commands.command(hidden=True, disabled=True)
-    async def secret(self, ctx):
-        '''Uhh... you're not supposed to see this
-        
-        Well... I guess you see it now... This is a command that provides a link to a website that has a 1 in 50 chance to reveal a secret.
-        ||Maybe something else, too.||'''
-        time = datetime.now()
-        await ctx.channel.send(embed = discord.Embed(title = "1 in 50 Chance", description = f'[Reveal Secret](https://zanderp25.com/secret)'))
-        await ctx.message.delete()
-        await self.log(f'{time} - {ctx.author} got Rick-Rolled in {ctx.guild} / #{ctx.channel}')
+    @commands.command(name="wink", aliases=[")", "-)"])
+    async def wink(self, ctx: commands.Context, *, user: discord.Member=None):
+        '''
+            Winks at a user.
+            User is optional.
+        '''
+        embed = discord.Embed(title="ehe", color=0x00ff00)
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/animu/wink") as r:
+                data = await r.json()
+                embed.set_image(url=data["link"])
+        if user is None:
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, content=f"{user.mention}")
 
-def setup(bot):
-    bot.add_cog(Fun(bot))
+    @commands.command(name="pat", aliases=["*pats*", "pats", "patpat"])
+    async def pat(self, ctx: commands.Context, user: discord.Member=None):
+        '''
+            Pats a user.
+        '''
+        embed = discord.Embed(title="*pat pat*", color=0x00ff00)
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/animu/pat") as r:
+                data = await r.json()
+                embed.set_image(url=data["link"])
+        await ctx.send(embed=embed, content=f"{user.mention}")
+
+    @commands.command(name="hug", aliases=["*hugs*", "hugs", "bearhug"])
+    async def hug(self, ctx: commands.Context, user: discord.Member=None):
+        '''
+            Hugs a user.
+        '''
+        if user == ctx.author:
+            await ctx.send(random.choice())
+            return
+        embed = discord.Embed(title="Don't squeeze too hard!", color=0x00ff00)
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/animu/hug") as r:
+                data = await r.json()
+                embed.set_image(url=data["link"])
+        await ctx.send(embed=embed, content=f"{user.mention}")
+
+async def setup(bot):
+    await bot.add_cog(Fun(bot))

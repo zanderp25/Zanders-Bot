@@ -170,8 +170,8 @@ class PM2(commands.Cog):
         else:
             await ctx.send(f"Process {id} not found")
 
-def setup(bot):
-    bot.add_cog(PM2(bot))
+async def setup(bot):
+    await bot.add_cog(PM2(bot))
 
 # CLI
 if __name__ == "__main__":

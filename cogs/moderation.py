@@ -128,5 +128,5 @@ class Moderation(commands.Cog):
             await ctx.guild.ban(user, reason=reason)
             await ctx.send(f"Banned {user}")
 
-def setup(bot):
-    bot.add_cog(Moderation(bot))
+async def setup(bot):
+    await bot.add_cog(Moderation(bot))

@@ -22,11 +22,11 @@ for file in os.listdir("cogs"):
     if file.endswith(".py"):
         cogs.append(f"cogs.{file[:-3]}")
 
-for cog in cogs:
-    try:
-        bot.load_extension(cog)
-    except Exception as error:
-        print(error)
+# for cog in cogs:
+#     try:
+#         bot.load_extension(cog)
+#     except Exception as error:
+#         print(error)
 #bot.load_extension('riftgun')
 
 def log(x):
@@ -37,6 +37,11 @@ def log(x):
 
 @bot.event
 async def on_ready():
+    for cog in cogs:
+        try:
+            await bot.load_extension(cog)
+        except Exception as error:
+            print(error)
     # bot.msg_del_emoji = '<:major_outage:803672907724226621>'
     time = datetime.datetime.now()
     log(f'{time} - Bot is logged in as {bot.user}')
