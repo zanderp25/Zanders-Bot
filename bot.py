@@ -16,7 +16,7 @@ intents = discord.Intents.all()
 owner_ids = {511655498676699136,642416218967375882}
 bot = DPyUtils.Bot(command_prefix=commands.when_mentioned_or(';','；'), intents=intents, case_insensitive=True, owner_ids=owner_ids)
 
-cogs = ['jishaku', 'DPyUtils.ContextEditor']
+cogs = ['jishaku', 'DPyUtils.ContextEditor2']
 
 for file in os.listdir("cogs"):
     if file.endswith(".py"):
