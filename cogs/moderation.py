@@ -34,11 +34,11 @@ class Moderation(commands.Cog):
             return err("you")
         return True
 
-    @commands.command(aliases=["yeet"])
+    @commands.hybrid_command(aliases=["yeet"])
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *,reason="No reason given."):
-        '''Kicks a user'''
+        '''Kicks a user from the server'''
         if await self.check_hierarchy(ctx, member, return_bool=True):
             async def _kick(member):
                 await member.kick(reason=reason)
@@ -55,11 +55,11 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("You can't do that!")
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *,reason="No reason given."):
-        '''Bans a user'''
+        '''Bans a user from the server'''
         if await self.check_hierarchy(ctx, member, return_bool=True):
             msg = await ctx.send(f"Banning member `{member}`")
             await member.ban(reason=reason)
@@ -70,10 +70,10 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("You can't do that!")
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.bot_has_permissions(manage_channels=True)
     @commands.has_permissions(manage_channels=True)
-    async def slowmode(self, ctx, time: int="0", channel: discord.TextChannel="current"):
+    async def slowmode(self, ctx, *, time: int=0, channel: discord.TextChannel=None):
         """Changes the slowmode of a channel in seconds, using 0 or leaving it blank to reset."""
         if channel == "current":
             async with ctx.typing():
@@ -84,11 +84,11 @@ class Moderation(commands.Cog):
                 await channel.edit(slowmode_delay=time, reason=f"Slowmode command called by {ctx.author}")
                 await ctx.send(f"Slowmode changed to **{time}** seconds in <#{channel.id}>.")
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.bot_has_permissions(manage_messages=True)
     @commands.has_permissions(manage_messages=True)
-    async def purge(self, ctx, number:int, purge_pinned_messages:bool = False):
-        '''Purges {number} amount of messages. If {purge_pinned_messages} is true, then it will delete pinned messages too.'''
+    async def purge(self, ctx, number:int, *, purge_pinned_messages:bool = False):
+        '''Purges {number} amount of messages, {purge_pinned_messages} ignores whether the message is pinned'''
         await ctx.message.delete()
         if purge_pinned_messages == True:
             n = await ctx.channel.purge(limit=number)
@@ -98,7 +98,7 @@ class Moderation(commands.Cog):
         await asyncio.sleep(2)
         await msg.delete()
     
-    @commands.command()
+    @commands.hybrid_command()
     @commands.bot_has_permissions(manage_messages=True)
     @commands.has_permissions(manage_messages=True)
     async def purgefrom(self, ctx, id:discord.Message):
@@ -109,18 +109,18 @@ class Moderation(commands.Cog):
         await asyncio.sleep(2)
         await msg.delete()
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.bot_has_permissions(ban_members=True)
     @commands.has_permissions(ban_members=True)
-    async def unban(self, ctx, user:discord.User, *,reason="No reason given."):
+    async def unban(self, ctx, user:discord.User, *,reason:str="No reason given."):
         '''Unbans a user'''
         await ctx.guild.unban(user, reason=reason)
         await ctx.send(f"Unbanned {user}")
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.bot_has_permissions(ban_members=True)
     @commands.has_permissions(ban_members=True)
-    async def hackban(self, ctx, user:discord.User, *,reason="No reason given."):
+    async def hackban(self, ctx, user:discord.User, *,reason:str="No reason given."):
         '''Bans a user that is not in the server'''
         if user.id in [x.id for x in ctx.guild.members]:
             raise MemberIsInGuild("That user is in the server!")

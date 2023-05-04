@@ -13,7 +13,7 @@ dotenv.load_dotenv(verbose=True)
 
 token = open("token.txt").read()
 intents = discord.Intents.all()
-owner_ids = {511655498676699136,642416218967375882}
+owner_ids = {511655498676699136,642416218967375882,1078147341141409843}
 bot = DPyUtils.Bot(command_prefix=commands.when_mentioned_or(';','；'), intents=intents, case_insensitive=True, owner_ids=owner_ids)
 
 cogs = ['jishaku', 'DPyUtils.ContextEditor2']

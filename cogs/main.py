@@ -49,7 +49,7 @@ class Main(commands.Cog):
         await ctx.send(f'<:shut:751421349355978822>')
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author}  said cmp shut')
 
-    @commands.command()
+    @commands.hybrid_command()
     async def time(self, ctx: commands.Context):
         '''Shows the localtime of the bot (EST) and UTC time.'''
         time = datetime.now()
@@ -57,14 +57,14 @@ class Main(commands.Cog):
         await ctx.send(embed = discord.Embed(title = "\u23f0 Times in EST and UTC", description = f'Local Time: `{time}`'+'\n'+f'UTC time: `{utctime}`', color = 0x0000e0))
         await self.log(f'{time} - {ctx.guild} / #{ctx.channel} - {ctx.author} Requested the time')
 
-    @commands.command()
+    @commands.hybrid_command(name="ping")
     async def ping(self, ctx: commands.Context):
         '''Test the latency of the bot'''
         time = datetime.now()
         await ctx.send('Pong! `' + str(round(self.bot.latency * 1000)) + ' ms` <a:party_parrot:720424857699090464>')
         await self.log(f'{time} - Pinged by {ctx.author} in {ctx.guild} / #{ctx.channel} | Ponged with {round(self.bot.latency*1000)} ms')
 
-    @commands.command(aliases=["av"])
+    @commands.hybrid_command(aliases=["av"])
     async def avatar(self, ctx: commands.Context, *, member:discord.Member=None):
         '''Gets the avatar of a user'''
         if member is None:

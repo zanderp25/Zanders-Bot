@@ -6,7 +6,7 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["pop", "bubble", "bubblewrap"])
+    @commands.hybrid_command(aliases=["pop", "bubble", "bubblewrap"])
     async def bubbles(self, ctx, width:int, height:int):
         '''
             Shows you virtual bubble wrap with a given width and height.
@@ -21,6 +21,7 @@ class Fun(commands.Cog):
 
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx):
+        '''cry about it'''
         pwp = [
             ";-;",
             "waaaaa",
@@ -37,7 +38,7 @@ class Fun(commands.Cog):
             await asyncio.sleep(2)
             await m.edit(content="¯\\\_(.\_.)\_/¯")
 
-    @commands.command(name="wink", aliases=[")", "-)"])
+    @commands.hybrid_command(name="wink", aliases=[")", "-)"])
     async def wink(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
             Winks at a user.
@@ -53,7 +54,7 @@ class Fun(commands.Cog):
         else:
             await ctx.send(embed=embed, content=f"{user.mention}")
 
-    @commands.command(name="pat", aliases=["*pats*", "pats", "patpat"])
+    @commands.hybrid_command(name="pat", aliases=["*pats*", "pats", "patpat"])
     async def pat(self, ctx: commands.Context, user: discord.Member=None):
         '''
             Pats a user.
@@ -65,7 +66,7 @@ class Fun(commands.Cog):
                 embed.set_image(url=data["link"])
         await ctx.send(embed=embed, content=f"{user.mention}")
 
-    @commands.command(name="hug", aliases=["*hugs*", "hugs", "bearhug"])
+    @commands.hybrid_command(name="hug", aliases=["*hugs*", "hugs", "bearhug"])
     async def hug(self, ctx: commands.Context, user: discord.Member=None):
         '''
             Hugs a user.

@@ -98,7 +98,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
+# .env # I need this to store the jishaku variable
 .venv
 env/
 venv/
