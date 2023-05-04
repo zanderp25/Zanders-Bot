@@ -164,9 +164,9 @@ class PM2(commands.Cog):
         if len(processes) == 0:
             await ctx.send("No processes found")
             return
-        list_ = "`ID ` `Name              ` `Status ` `Time` `↺     ` `CPU     ` `MEM     `"
+        list_ = "`ID ` `Name              ` `Status ` `Time` `↺    ` `CPU     ` `MEM     `"
         for p in processes:
-            list_ += f"\n`{p['id'].ljust(3)}` `{p['name'].ljust(18)}` `{p['status'].ljust(7)}` `{p['uptime'].ljust(4)}` `{p['restarts'].ljust(6)}` `{p['cpu'].ljust(8)}` `{p['mem'].ljust(8)}`"
+            list_ += f"\n`{str(p['id']).ljust(3)}` `{p['name'].ljust(18)}` `{p['status'].ljust(7)}` `{p['uptime'].ljust(4)}` `{str(p['restarts']).ljust(6)}` `{p['cpu'].ljust(8)}` `{p['mem'].ljust(8)}`"
         embed = discord.Embed(
             title="PM2 Processes",
             description=list_,
