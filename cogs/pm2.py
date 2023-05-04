@@ -1,33 +1,68 @@
-import re, subprocess, asyncio
+import re, subprocess, asyncio, json
+from datetime import datetime
 import discord
 from discord.ext import commands
 
-# Defaults
-ssh = ""
-sort = True
-sort_by = "id"
-
 # Core Functions
 def list_pm2():
-    if ssh == "":
-        command = "pm2 ls"
-    else:
-        command = f'echo "pm2 ls" | ssh {ssh}'
-
-    output = re.findall(
-        r'│ ([0-9 ]{3}) │ (.*) │ (.{11}) │ (.{7}) │ (.{7}) │ (.{8}) │ (.{6}) │ (.{4}) │ (.{9}) │ (.{8}) │ (.{8}) │ (.{4,11}) │ (.{8}) │',
-        subprocess.run(command, shell=True, stdout=subprocess.PIPE, stdin=subprocess.DEVNULL, stderr=subprocess.DEVNULL).stdout.decode(),
+    output = json.loads(
+        subprocess.run(
+            "pm2 jlist",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stdin=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        ).stdout.decode()
     )
 
     processes = []
-    keys = "id name namespace version mode pid uptime restarts status cpu mem user watching".split()
     for p in output:
-        processes += [dict(zip(keys, [p[i].strip() for i in range(13)]))]
-    try:
-        if sort: processes = sorted(processes, key = lambda item: item[sort_by])
-    except:
-        pass
+        processes += [{
+            "id": p['pm_id'],
+            "name": p['name'],
+            "pid": p['pid'],
+            "uptime": timedelta_to_str(
+                datetime.utcnow()-datetime.utcfromtimestamp(
+                    p['pm2_env']['pm_uptime']/1000
+                )
+            ),
+            "restarts": p["pm2_env"]["restart_time"],
+            "status": p["pm2_env"]["status"],
+            "cpu": f"{p['monit']['cpu']}%",
+            "mem": bytes_to_str(p["monit"]["memory"])
+        }]
+
     return processes
+
+def timedelta_to_str(td):
+    '''Converts a timedelta to a human-readable string'''
+    total_seconds = int(td.total_seconds())
+    periods = [
+        ('y', 31536000),  # years
+        ('M', 2592000),   # months
+        ('w', 604800),    # weeks
+        ('d', 86400),     # days
+        ('h', 3600),      # hours
+        ('m', 60),        # minutes
+        ('s', 1),         # seconds
+    ]
+
+    parts = []
+    for period_name, period_seconds in periods:
+        if total_seconds >= period_seconds:
+            period_value, total_seconds = divmod(total_seconds, period_seconds)
+            parts.append(f"{period_value}{period_name}")
+    return parts[0] or "0s"
+
+def bytes_to_str(size_bytes):
+    power = 2**10
+    n = 0
+    size = size_bytes / power
+    while size > power:
+        size /= power
+        n += 1
+    units = ["b", "kb", "mb", "gb", "tb"]
+    return f"{size:.1f}{units[n]}"
 
 def start_pm2(id):
     if ssh == "":
