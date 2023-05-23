@@ -19,6 +19,20 @@ class Fun(commands.Cog):
         height = height if 0<height <=20 else 20
         await ctx.send((('||pop||'*width)+'\n')*height)
 
+    @commands.hybrid_command()
+    async def dice(self, ctx):
+        '''Roll a die'''
+        return await ctx.send(f"It's a {random.randint(1,6)}!")
+
+    @commands.hybrid_command()
+    async def coinflip(self, ctx):
+        '''Flip a coin'''
+        num = random.randint(1,100)
+        if num == 69:
+            return await ctx.send(f"Oh, no! I dropped the coin! Try again.")
+        coin = 'heads' if num % 2 else 'tails'
+        return await ctx.send(f"It's {coin}!")
+
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx):
         '''cry about it'''
@@ -34,7 +48,7 @@ class Fun(commands.Cog):
         ]
         pwp = random.choice(pwp)
         m = await ctx.send(pwp)
-        if pwp is "¯\_(ツ)_/¯":
+        if pwp == "¯\_(ツ)_/¯":
             await asyncio.sleep(2)
             await m.edit(content="¯\\\_(.\_.)\_/¯")
 
