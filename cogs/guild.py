@@ -70,7 +70,7 @@ class Guild(commands.Cog):
         m = await ctx.send("<a:loading:742718904622907463> Stopping server...")
         await self.run_sync(os.system, 'pm2 stop 1')
         await m.edit(content="<a:loading:742718904622907463> Backing up the server...")
-        await self.run_sync(os.system, 'cd ~/Minecraft; ./backup.sh')
+        await self.run_sync(os.system, 'cd ~/Minecraft/server; ./backup.sh')
         await m.edit(content="<a:loading:742718904622907463> Starting server...")
         await self.run_sync(os.system, 'pm2 start 1')
         await m.edit(content="Done!")
