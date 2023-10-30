@@ -3,9 +3,9 @@ from datetime import datetime
 from discord.ext import commands
 
 class Fun(commands.Cog):
-    async def __init__(self, bot):
+    def __init__(self, bot):
         self.bot = bot
-        await self.load_gif_cache()
+        asyncio.run(self.load_gif_cache())
 
     async def load_gif_cache(self):
         self.gif_cache = {}
@@ -163,4 +163,4 @@ class Fun(commands.Cog):
             await ctx.send(embed=embed, content=f"*hugs {user.mention}*")
 
 async def setup(bot):
-    await bot.add_cog(await Fun(bot))
+    await bot.add_cog(Fun(bot))
