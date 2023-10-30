@@ -3,8 +3,24 @@ from datetime import datetime
 from discord.ext import commands
 
 class Fun(commands.Cog):
-    def __init__(self, bot):
+    async def __init__(self, bot):
         self.bot = bot
+        await self.load_gif_cache()
+
+    async def load_gif_cache(self):
+        self.gif_cache = {}
+        for channel in [1121159013309087794, 1121159519809048748, 1121159545624985612]:
+            self.gif_cache[channel] = [msg async for msg in self.bot.get_channel(channel).history(limit=1000)]
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.channel in self.gif_cache.keys():
+            self.gif_cache[message.channel].append(message)
+
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        if message.channel in self.gif_cache.keys():
+            self.gif_cache[message.channel].remove(message)
 
     @commands.hybrid_command(aliases=["pop", "bubble", "bubblewrap"])
     async def bubbles(self, ctx, width:int, height:int):
@@ -64,7 +80,7 @@ class Fun(commands.Cog):
             await ctx.send("Why are you winking at yourself?")
             return
         embed = discord.Embed(title="ehe", color=0x00ff00)
-        messages = [msg async for msg in self.bot.get_channel(1121159013309087794).history(limit=1000)]
+        messages = self.gif_cache[1121159013309087794]
         message = random.choice(messages)
         del messages
 
@@ -91,7 +107,7 @@ class Fun(commands.Cog):
             User is optional.
         '''
         embed = discord.Embed(title="*pat pat*", color=0x00ff00)
-        messages = [msg async for msg in self.bot.get_channel(1121159545624985612).history(limit=1000)]
+        messages = self.gif_cache[1121159545624985612]
         message = random.choice(messages)
         del messages
         if user == ctx.author:
@@ -124,7 +140,7 @@ class Fun(commands.Cog):
         embed = discord.Embed(title="Don't squeeze too hard!", color=0x00ff00)
         if user == ctx.author:
             embed.title = ("You must be really lonely to hug yourself.")
-        messages = [msg async for msg in self.bot.get_channel(1121159519809048748).history(limit=1000)]
+        messages = self.gif_cache[1121159519809048748]
         message = random.choice(messages)
         del messages
 
@@ -147,4 +163,4 @@ class Fun(commands.Cog):
             await ctx.send(embed=embed, content=f"*hugs {user.mention}*")
 
 async def setup(bot):
-    await bot.add_cog(Fun(bot))
+    await bot.add_cog(await Fun(bot))
