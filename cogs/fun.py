@@ -29,11 +29,11 @@ class Fun(commands.Cog):
         '''Flip a coin'''
         num = random.randint(1,100)
         if num == 69:
-            return await ctx.send(f"Oh, no! I dropped the coin! Try again.")
+            return await ctx.send("# <:gasp:923725209821921281> Oh, no! I dropped the coin! Try again.")
         if num % 2:
-            return await ctx.send("# It's heads! <:heads:1147937093897691186>")
+            return await ctx.send("# <:heads:1147937093897691186> It's heads!")
         else:
-            return await ctx.send("# It's tails! <:tails:1147937095181144154>")
+            return await ctx.send("# <:tails:1147937095181144154> It's tails!")
 
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx):
