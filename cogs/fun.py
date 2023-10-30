@@ -5,22 +5,21 @@ from discord.ext import commands
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        asyncio.run(self.load_gif_cache())
 
-    async def load_gif_cache(self):
+    async def cog_load(self):
         self.gif_cache = {}
         for channel in [1121159013309087794, 1121159519809048748, 1121159545624985612]:
             self.gif_cache[channel] = [msg async for msg in self.bot.get_channel(channel).history(limit=1000)]
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel in self.gif_cache.keys():
-            self.gif_cache[message.channel].append(message)
+        if message.channel.id in self.gif_cache.keys():
+            self.gif_cache[message.channel.id].append(message)
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
-        if message.channel in self.gif_cache.keys():
-            self.gif_cache[message.channel].remove(message)
+        if message.channel.id in self.gif_cache.keys():
+            self.gif_cache[message.channel.id].remove(message)
 
     @commands.hybrid_command(aliases=["pop", "bubble", "bubblewrap"])
     async def bubbles(self, ctx, width:int, height:int):
@@ -76,13 +75,10 @@ class Fun(commands.Cog):
             Winks at someone.
             User is optional.
         '''
-        if user == ctx.author:
-            await ctx.send("Why are you winking at yourself?")
-            return
         embed = discord.Embed(title="ehe", color=0x00ff00)
-        messages = self.gif_cache[1121159013309087794]
-        message = random.choice(messages)
-        del messages
+        message = random.choice(self.gif_cache[1121159013309087794])
+        if user == ctx.author:
+            embed.title = "Why are you winking at yourself?"
 
         if len(message.attachments) > 0:
             embed.set_image(url=message.attachments[0].url)
@@ -107,9 +103,7 @@ class Fun(commands.Cog):
             User is optional.
         '''
         embed = discord.Embed(title="*pat pat*", color=0x00ff00)
-        messages = self.gif_cache[1121159545624985612]
-        message = random.choice(messages)
-        del messages
+        message = random.choice(self.gif_cache[1121159545624985612])
         if user == ctx.author:
             embed.title = "*pats you*"
 
@@ -138,11 +132,9 @@ class Fun(commands.Cog):
             User is optional.
         '''
         embed = discord.Embed(title="Don't squeeze too hard!", color=0x00ff00)
+        message = random.choice(self.gif_cache[1121159519809048748])
         if user == ctx.author:
             embed.title = ("You must be really lonely to hug yourself.")
-        messages = self.gif_cache[1121159519809048748]
-        message = random.choice(messages)
-        del messages
 
         if len(message.attachments) > 0:
             embed.set_image(url=message.attachments[0].url)
