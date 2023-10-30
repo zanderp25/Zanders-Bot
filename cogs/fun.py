@@ -57,45 +57,94 @@ class Fun(commands.Cog):
     @commands.hybrid_command(name="wink", aliases=[")", "-)"])
     async def wink(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
-            Winks at a user.
+            Winks at someone.
             User is optional.
         '''
+        if user == ctx.author:
+            await ctx.send("Why are you winking at yourself?")
+            return
         embed = discord.Embed(title="ehe", color=0x00ff00)
-        async with aiohttp.ClientSession() as session:
-            async with session.get("https://some-random-api.ml/animu/wink") as r:
-                data = await r.json()
-                embed.set_image(url=data["link"])
+        messages = [msg async for msg in self.bot.get_channel(1121159013309087794).history(limit=1000)]
+        message = random.choice(messages)
+        del messages
+
+        if len(message.attachments) > 0:
+            embed.set_image(url=message.attachments[0].url)
+        else:
+            url = message.content
+            if "tenor.com" in url:
+                url += ".gif"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as resp:
+                        url = str(resp.url)
+            embed.set_image(url=url)
+
         if user is None:
             await ctx.send(embed=embed)
         else:
-            await ctx.send(embed=embed, content=f"{user.mention}")
+            await ctx.send(embed=embed, content=f"*wink wink* {user.mention}")
 
     @commands.hybrid_command(name="pat", aliases=["*pats*", "pats", "patpat"])
-    async def pat(self, ctx: commands.Context, user: discord.Member=None):
+    async def pat(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
-            Pats a user.
+            Pats someone.
+            User is optional.
         '''
         embed = discord.Embed(title="*pat pat*", color=0x00ff00)
-        async with aiohttp.ClientSession() as session:
-            async with session.get("https://some-random-api.ml/animu/pat") as r:
-                data = await r.json()
-                embed.set_image(url=data["link"])
-        await ctx.send(embed=embed, content=f"{user.mention}")
+        messages = [msg async for msg in self.bot.get_channel(1121159545624985612).history(limit=1000)]
+        message = random.choice(messages)
+        del messages
+        if user == ctx.author:
+            embed.title = "*pats you*"
+
+        if len(message.attachments) > 0:
+            embed.set_image(url=message.attachments[0].url)
+        else:
+            url = message.content
+            if "tenor.com" in url:
+                url += ".gif"
+                print(url)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as resp:
+                        url = str(resp.url)
+            print(url)
+            embed.set_image(url=url)
+
+        if user is None:
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, content=f"*pats {user.mention}*")
 
     @commands.hybrid_command(name="hug", aliases=["*hugs*", "hugs", "bearhug"])
-    async def hug(self, ctx: commands.Context, user: discord.Member=None):
+    async def hug(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
-            Hugs a user.
+            Hugs someone.
+            User is optional.
         '''
-        if user == ctx.author:
-            await ctx.send(random.choice())
-            return
         embed = discord.Embed(title="Don't squeeze too hard!", color=0x00ff00)
-        async with aiohttp.ClientSession() as session:
-            async with session.get("https://some-random-api.ml/animu/hug") as r:
-                data = await r.json()
-                embed.set_image(url=data["link"])
-        await ctx.send(embed=embed, content=f"{user.mention}")
+        if user == ctx.author:
+            embed.title = ("You must be really lonely to hug yourself.")
+        messages = [msg async for msg in self.bot.get_channel(1121159519809048748).history(limit=1000)]
+        message = random.choice(messages)
+        del messages
+
+        if len(message.attachments) > 0:
+            embed.set_image(url=message.attachments[0].url)
+        else:
+            url = message.content
+            if "tenor.com" in url:
+                url += ".gif"
+                print(url)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as resp:
+                        url = str(resp.url)
+            print(url)
+            embed.set_image(url=url)
+
+        if user is None:
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, content=f"*hugs {user.mention}*")
 
 async def setup(bot):
     await bot.add_cog(Fun(bot))
