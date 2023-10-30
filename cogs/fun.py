@@ -30,8 +30,10 @@ class Fun(commands.Cog):
         num = random.randint(1,100)
         if num == 69:
             return await ctx.send(f"Oh, no! I dropped the coin! Try again.")
-        coin = 'heads' if num % 2 else 'tails'
-        return await ctx.send(f"It's {coin}!")
+        if num % 2:
+            return await ctx.send("# It's heads! <:heads:1147937093897691186>")
+        else:
+            return await ctx.send("# It's tails! <:tails:1147937095181144154>")
 
     @commands.command(name="-;", aliases=["(","😭"], hidden=True)
     async def waaa(self, ctx):
