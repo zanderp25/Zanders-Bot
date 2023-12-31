@@ -8,7 +8,13 @@ class Fun(commands.Cog):
 
     async def cog_load(self):
         self.gif_cache = {}
-        for channel in [1121159013309087794, 1121159519809048748, 1121159545624985612]:
+        for channel in [
+            1121159013309087794, # wink
+            1121159519809048748, # hug
+            1121159545624985612, # pat
+            1191087790683869204, # slap
+            1191090178668888095, # bonk
+        ]:
             self.gif_cache[channel] = [msg async for msg in self.bot.get_channel(channel).history(limit=1000)]
 
     @commands.Cog.listener()
@@ -75,7 +81,16 @@ class Fun(commands.Cog):
             Winks at someone.
             User is optional.
         '''
-        embed = discord.Embed(title="ehe", color=0x00ff00)
+        message_choices = [
+            "ehe",
+            "✨",
+            "*wink wink*",
+            "✨😉✨",
+            "You have been blessed with a virtual wink!",
+            "Behold, the mystical power of a virtual wink!",
+        ]
+
+        embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
         message = random.choice(self.gif_cache[1121159013309087794])
         if user == ctx.author:
             embed.title = "Why are you winking at yourself?"
@@ -102,6 +117,16 @@ class Fun(commands.Cog):
             Pats someone.
             User is optional.
         '''
+        message_choices = [
+            "*pat pat*",
+            "The digital hand of encouragement has spoken. *pat pat*",
+            "When life gives you lemons, pat them. *pat pat*",
+            "When you're feeling down, just remember that you're awesome. *pat pat*",
+            "Do you like pats? I like pats. *pat pat*",
+            "You've been blessed with a virtual pat! *pat pat*",
+            "[Everyone liked that.]",
+        ]
+
         embed = discord.Embed(title="*pat pat*", color=0x00ff00)
         message = random.choice(self.gif_cache[1121159545624985612])
         if user == ctx.author:
@@ -131,7 +156,18 @@ class Fun(commands.Cog):
             Hugs someone.
             User is optional.
         '''
-        embed = discord.Embed(title="Don't squeeze too hard!", color=0x00ff00)
+        message_choices = [
+            "Don't squeeze too hard!",
+            "You just got hugged!",
+            "Don't forget that you're awesome!",
+            "You've been blessed with a virtual hug!",
+            "You should hug someone more often.",
+            "When you're feeling down, just remember that you're awesome.",
+            "When life gives you challenges, a hug can help.",
+            "When life gives you lemons, hug them.",
+        ]
+
+        embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
         message = random.choice(self.gif_cache[1121159519809048748])
         if user == ctx.author:
             embed.title = ("You must be really lonely to hug yourself.")
@@ -153,6 +189,89 @@ class Fun(commands.Cog):
             await ctx.send(embed=embed)
         else:
             await ctx.send(embed=embed, content=f"*hugs {user.mention}*")
+
+    @commands.hybrid_command(name="slap", aliases=[])
+    async def slap(self, ctx: commands.Context, *, user: discord.Member=None):
+        '''
+            Slaps someone.
+            User is optional.
+        '''
+        message_choices = [
+            "You just got hit with the mighty hand of inconvenience! ✋",
+            "The smack heard around the world!",
+            "You just got slapped!",
+            "Congratulations! You've been visited by the digital palm of surprise! ✋✨",
+            "Don't hit too hard!",
+            "Consider yourself virtually slapped. Good times.",
+            "You've been hit by! You've been struck by! My hand. *slap*",
+            "To slap or not to slap, that is the question. And the answer is... *slap*",
+            "No one expects the slapping inquisition! *slap*",
+            "[Everyone disliked that.]",
+            "How about a big ol' slap to the face? *slap*",
+        ]
+
+        embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
+        message = random.choice(self.gif_cache[1191087790683869204])
+        if user == ctx.author:
+            embed.title = ("Why are you slapping yourself? lol")
+
+        if len(message.attachments) > 0:
+            embed.set_image(url=message.attachments[0].url)
+        else:
+            url = message.content
+            if "tenor.com" in url:
+                url += ".gif"
+                print(url)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as resp:
+                        url = str(resp.url)
+            print(url)
+            embed.set_image(url=url)
+
+        if user is None:
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, content=f"*slaps {user.mention}*")
+
+    @commands.hybrid_command(name="bonk", aliases=["bonks"])
+    async def bonk(self, ctx: commands.Context, *, user: discord.Member=None):
+        '''
+            Bonks someone.
+            User is optional.
+        '''
+        message_choices = [
+            "Bonk! That's the sound of the humor hammer hitting you gently on the noggin. 🔨",
+            "You've been hit by! You've been struck by! A smooth criminal! *bonk*",
+            "You've been hit by! You've been struck by! A *bonk*",
+            "You've been bonked! Time to contemplate your life choices with a gentle tap on the head.",
+            "Behold, the gentle bonk of enlightenment has graced your presence. ✨🔨✨",
+            "According to the judgement of the Oratrice Mecanique d'Analyse Cardinale, we now turn to the Oratrice Mecanique d'Analyse Cardinale.",
+            "Bonk! Your brain has been upgraded to the latest version of puns and silliness, enjoy! 💾🔨" ,
+            "You've just experienced a bonk of enlightenment. Welcome to the club of mildly confused wisdom seekers. 🧠🔨",
+        ]
+
+        embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
+        message = random.choice(self.gif_cache[1191090178668888095])
+        if user == ctx.author:
+            embed.title = ("you look funny bonking yourself lol")
+
+        if len(message.attachments) > 0:
+            embed.set_image(url=message.attachments[0].url)
+        else:
+            url = message.content
+            if "tenor.com" in url:
+                url += ".gif"
+                print(url)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as resp:
+                        url = str(resp.url)
+            print(url)
+            embed.set_image(url=url)
+
+        if user is None:
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, content=f"*bonks {user.mention}*")
 
 async def setup(bot):
     await bot.add_cog(Fun(bot))
