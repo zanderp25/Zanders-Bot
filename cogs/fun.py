@@ -94,17 +94,7 @@ class Fun(commands.Cog):
         message = random.choice(self.gif_cache[1121159013309087794])
         if user == ctx.author:
             embed.title = "Why are you winking at yourself?"
-
-        if len(message.attachments) > 0:
-            embed.set_image(url=message.attachments[0].url)
-        else:
-            url = message.content
-            if "tenor.com" in url:
-                url += ".gif"
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as resp:
-                        url = str(resp.url)
-            embed.set_image(url=url)
+        embed.set_image(url=await self.get_gif(message))
 
         if user is None:
             await ctx.send(embed=embed)
@@ -131,19 +121,7 @@ class Fun(commands.Cog):
         message = random.choice(self.gif_cache[1121159545624985612])
         if user == ctx.author:
             embed.title = "*pats you*"
-
-        if len(message.attachments) > 0:
-            embed.set_image(url=message.attachments[0].url)
-        else:
-            url = message.content
-            if "tenor.com" in url:
-                url += ".gif"
-                print(url)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as resp:
-                        url = str(resp.url)
-            print(url)
-            embed.set_image(url=url)
+        embed.set_image(url=await self.get_gif(message))
 
         if user is None:
             await ctx.send(embed=embed)
@@ -171,19 +149,7 @@ class Fun(commands.Cog):
         message = random.choice(self.gif_cache[1121159519809048748])
         if user == ctx.author:
             embed.title = ("You must be really lonely to hug yourself.")
-
-        if len(message.attachments) > 0:
-            embed.set_image(url=message.attachments[0].url)
-        else:
-            url = message.content
-            if "tenor.com" in url:
-                url += ".gif"
-                print(url)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as resp:
-                        url = str(resp.url)
-            print(url)
-            embed.set_image(url=url)
+        embed.set_image(url=await self.get_gif(message))
 
         if user is None:
             await ctx.send(embed=embed)
@@ -214,19 +180,7 @@ class Fun(commands.Cog):
         message = random.choice(self.gif_cache[1191087790683869204])
         if user == ctx.author:
             embed.title = ("Why are you slapping yourself? lol")
-
-        if len(message.attachments) > 0:
-            embed.set_image(url=message.attachments[0].url)
-        else:
-            url = message.content
-            if "tenor.com" in url:
-                url += ".gif"
-                print(url)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as resp:
-                        url = str(resp.url)
-            print(url)
-            embed.set_image(url=url)
+        embed.set_image(url=await self.get_gif(message))
 
         if user is None:
             await ctx.send(embed=embed)
@@ -254,9 +208,16 @@ class Fun(commands.Cog):
         message = random.choice(self.gif_cache[1191090178668888095])
         if user == ctx.author:
             embed.title = ("you look funny bonking yourself lol")
+        embed.set_image(url=await self.get_gif(message))
 
+        if user is None:
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(embed=embed, content=f"*bonks {user.mention}*")
+
+    async def get_gif(self, message):
         if len(message.attachments) > 0:
-            embed.set_image(url=message.attachments[0].url)
+            return message.attachments[0].url
         else:
             url = message.content
             if "tenor.com" in url:
@@ -265,13 +226,8 @@ class Fun(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as resp:
                         url = str(resp.url)
-            print(url)
-            embed.set_image(url=url)
-
-        if user is None:
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send(embed=embed, content=f"*bonks {user.mention}*")
+            # print(url)
+            return url
 
 async def setup(bot):
     await bot.add_cog(Fun(bot))
