@@ -52,7 +52,7 @@ class Fun(commands.Cog):
             "<:die6:1147923699505320018>",
         ]
         choice = random.randint(0,5)
-        return await ctx.send(f"{dice[choice]} You rolled a {choice+1}!")
+        return await ctx.send(f"# {dice[choice]} You rolled a {choice+1}!")
 
     @commands.hybrid_command()
     async def coinflip(self, ctx):
