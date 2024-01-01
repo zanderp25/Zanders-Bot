@@ -57,7 +57,7 @@ class Fun(commands.Cog):
     @commands.hybrid_command()
     async def coinflip(self, ctx):
         '''Flip a coin'''
-        num = random.randint(1,100)
+        num = random.randint(1,101)
         if num == 69:
             return await ctx.send("# <:gasp:923725209821921281> Oh, no! I dropped the coin! Try again.")
         if num % 2:
