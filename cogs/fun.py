@@ -43,7 +43,16 @@ class Fun(commands.Cog):
     @commands.hybrid_command()
     async def dice(self, ctx):
         '''Roll a die'''
-        return await ctx.send(f"It's a {random.randint(1,6)}!")
+        dice = [
+            "<:die1:1147923683403378769>",
+            "<:die2:1147923685257257062>",
+            "<:die3:1147923687274713108>",
+            "<:die4:1147923689040523397>",
+            "<:die5:1147923696179224586>",
+            "<:die6:1147923699505320018>",
+        ]
+        choice = random.randint(0,5)
+        return await ctx.send(f"{dice[choice]} You rolled a {choice+1}!")
 
     @commands.hybrid_command()
     async def coinflip(self, ctx):
