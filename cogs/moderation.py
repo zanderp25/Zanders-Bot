@@ -38,7 +38,16 @@ class Moderation(commands.Cog):
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *,reason="No reason given."):
-        '''Kicks a user from the server'''
+        '''
+        Kicks a user from the server
+
+        Parameters
+        ---
+        member
+            The member to kick
+        reason
+            The reason for kicking the member
+        '''
         if await self.check_hierarchy(ctx, member, return_bool=True):
             async def _kick(member):
                 await member.kick(reason=reason)
@@ -59,7 +68,16 @@ class Moderation(commands.Cog):
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *,reason="No reason given."):
-        '''Bans a user from the server'''
+        '''
+        Bans a user from the server
+
+        Parameters
+        ---
+        member
+            The member to ban
+        reason
+            The reason for banning the member
+        '''
         if await self.check_hierarchy(ctx, member, return_bool=True):
             msg = await ctx.send(f"Banning member `{member}`")
             await member.ban(reason=reason)
@@ -74,7 +92,16 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(manage_channels=True)
     @commands.has_permissions(manage_channels=True)
     async def slowmode(self, ctx, *, time: int=0, channel: discord.TextChannel=None):
-        """Changes the slowmode of a channel in seconds, using 0 or leaving it blank to reset."""
+        '''
+        Sets the slowmode of a channel. If no time is specified, it will be set to 0.
+
+        Parameters
+        ---
+        time
+            Seconds until people without manage messages can send messages again
+        channel
+            The channel to set the slowmode
+        '''
         if channel == "current":
             async with ctx.typing():
                 await ctx.message.channel.edit(slowmode_delay=time, reason=f"Slowmode command called by {ctx.author}")
@@ -88,7 +115,16 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(manage_messages=True)
     @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, number:int, *, purge_pinned_messages:bool = False):
-        '''Purges {number} amount of messages, {purge_pinned_messages} ignores whether the message is pinned'''
+        '''
+        Purges messages from the channel
+
+        Parameters
+        ---
+        number
+            The number of messages to purge
+        purge_pinned_messages
+            Whether to purge pinned messages
+        '''
         await ctx.message.delete()
         if purge_pinned_messages == True:
             n = await ctx.channel.purge(limit=number)
@@ -102,7 +138,14 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(manage_messages=True)
     @commands.has_permissions(manage_messages=True)
     async def purgefrom(self, ctx, id:discord.Message):
-        '''Purges messages after the specified message, with a limit of 500'''
+        '''
+        Purges messages from the channel after a certain message
+
+        Parameters
+        ---
+        id
+            The id of the message to purge after
+        '''
         await ctx.message.delete()
         n = await ctx.channel.purge(after=id)
         msg = await ctx.send(f"Deleted {len(n)} messages.")
@@ -113,7 +156,16 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(ban_members=True)
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, user:discord.User, *,reason:str="No reason given."):
-        '''Unbans a user'''
+        '''
+        Unbans a user from the server
+
+        Parameters
+        ---
+        user
+            The id of the user to unban
+        reason
+            The reason for unbanning the user
+        '''
         await ctx.guild.unban(user, reason=reason)
         await ctx.send(f"Unbanned {user}")
 
@@ -121,7 +173,16 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(ban_members=True)
     @commands.has_permissions(ban_members=True)
     async def hackban(self, ctx, user:discord.User, *,reason:str="No reason given."):
-        '''Bans a user that is not in the server'''
+        '''
+        Bans a user who is not in the server
+        
+        Parameters
+        ---
+        user
+            The id of the user to ban
+        reason
+            The reason for banning the user
+        '''
         if user.id in [x.id for x in ctx.guild.members]:
             raise MemberIsInGuild("That user is in the server!")
         else:

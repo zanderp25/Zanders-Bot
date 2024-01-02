@@ -1,5 +1,5 @@
 git+https://github.com/clari7744/discord.py
 git+https://github.com/clari7744/DPyUtils
-jishaku
+git+https://github.com/clari7744/jishaku@rtfm
 ffmpeg
 youtube_dl

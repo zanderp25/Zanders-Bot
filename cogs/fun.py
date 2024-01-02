@@ -41,8 +41,37 @@ class Fun(commands.Cog):
         await ctx.send((('||pop||'*width)+'\n')*height)
 
     @commands.hybrid_command()
-    async def dice(self, ctx):
-        '''Roll a die'''
+    async def dice(self, ctx: commands.Context, *, number: typing.Optional[int] = 1, sides: typing.Optional[int] = 6):
+        '''
+        Roll some dice
+        
+        Parameters
+        ---
+        number
+            The number of dice to roll
+        sides
+            How many sides each die should have
+        '''
+        dice = self.RerollView.dice
+        if not 0 < number <= 20: return await ctx.send("You can only roll between 1 and 20 dice!", ephemeral=True)
+        if sides < 1: return await ctx.send("An object with less than 1 side just doesn't exist!", ephemeral=True)
+        if sides != 6:
+            choices = [random.randint(0,sides-1) for _ in range(number)]
+            await ctx.send(f"# You rolled: {', '.join([str(choice+1) for choice in choices])}", view=self.RerollView(ctx.author, number, sides))
+        elif number == 1:
+            choice = random.randint(0,5)
+            await ctx.send(f"# {dice[choice]} You rolled a {choice+1}!", view=self.RerollView(ctx.author, 1))
+        else:
+            choices = [random.randint(0,5) for _ in range(number)]
+            await ctx.send(f"{' '.join([dice[choice] for choice in choices])}", view=self.RerollView(ctx.author, number))
+
+    class RerollView(discord.ui.View):
+        def __init__(self, author: discord.Member, number: int, sides: int = 6):
+            super().__init__()
+            self.author = author
+            self.number = number
+            self.sides = sides
+        
         dice = [
             "<:die1:1147923683403378769>",
             "<:die2:1147923685257257062>",
@@ -51,8 +80,20 @@ class Fun(commands.Cog):
             "<:die5:1147923696179224586>",
             "<:die6:1147923699505320018>",
         ]
-        choice = random.randint(0,5)
-        return await ctx.send(f"# {dice[choice]} You rolled a {choice+1}!")
+
+        @discord.ui.button(label="Reroll", style=discord.ButtonStyle.green, emoji="<:reroll:1191524207654355005>")
+        async def reroll(self, interaction: discord.Interaction, button: discord.ui.Button,):
+            if interaction.user.id != self.author.id:
+                return await interaction.response.send_message("You can't reroll someone else's dice!", ephemeral=True)
+            if self.sides != 6:
+                choices = [random.randint(0,self.sides-1) for _ in range(self.number)]
+                await interaction.response.edit_message(content=f"# You rolled: {', '.join([str(choice+1) for choice in choices])}", view=self)
+            elif self.number == 1:
+                choice = random.randint(0,5)
+                await interaction.response.edit_message(content=f"# {self.dice[choice]} You rolled a {choice+1}!", view=self)
+            else:
+                choices = [random.randint(0,5) for _ in range(self.number)]
+                await interaction.response.edit_message(content=f"{' '.join([self.dice[choice] for choice in choices])}", view=self)
 
     @commands.hybrid_command()
     async def coinflip(self, ctx):
@@ -88,7 +129,11 @@ class Fun(commands.Cog):
     async def wink(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
             Winks at someone.
-            User is optional.
+
+            Parameters
+            ---
+            user
+                The user to wink at. Optional.
         '''
         message_choices = [
             "ehe",
@@ -114,7 +159,11 @@ class Fun(commands.Cog):
     async def pat(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
             Pats someone.
-            User is optional.
+
+            Parameters
+            ---
+            user
+                The user to pat. Optional.
         '''
         message_choices = [
             "*pat pat*",
@@ -141,7 +190,11 @@ class Fun(commands.Cog):
     async def hug(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
             Hugs someone.
-            User is optional.
+
+            Parameters
+            ---
+            user
+                The user to hug. Optional.
         '''
         message_choices = [
             "Don't squeeze too hard!",
@@ -169,7 +222,11 @@ class Fun(commands.Cog):
     async def slap(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
             Slaps someone.
-            User is optional.
+
+            Parameters
+            ---
+            user
+                The user to slap. Optional.
         '''
         message_choices = [
             "You just got hit with the mighty hand of inconvenience! ✋",
@@ -200,7 +257,11 @@ class Fun(commands.Cog):
     async def bonk(self, ctx: commands.Context, *, user: discord.Member=None):
         '''
             Bonks someone.
-            User is optional.
+
+            Parameters
+            ---
+            user
+                The user to bonk. Optional.
         '''
         message_choices = [
             "Bonk! That's the sound of the humor hammer hitting you gently on the noggin. 🔨",
@@ -231,11 +292,9 @@ class Fun(commands.Cog):
             url = message.content
             if "tenor.com" in url:
                 url += ".gif"
-                print(url)
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as resp:
                         url = str(resp.url)
-            # print(url)
             return url
 
 async def setup(bot):
