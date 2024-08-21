@@ -124,9 +124,23 @@ class Fun(commands.Cog):
         if pwp == "¯\_(ツ)_/¯":
             await asyncio.sleep(2)
             await m.edit(content="¯\\\_(.\_.)\_/¯")
+    class ActionBackView(discord.ui.View):
+        def __init__(self, author: discord.Member, action: str, action_func: typing.Callable, action_ctx: commands.Cog):
+            super().__init__()
+            self.author = author
+            self.action = action
+            self.action_func = action_func
+            self.action_ctx = action_ctx
+
+        @discord.ui.button(label="No U", style=discord.ButtonStyle.blurple, emoji="🔄")
+        async def action_back(self, interaction: discord.Interaction, button: discord.ui.Button):
+            await self.action_func(
+                interaction,
+                user=self.author
+            )
 
     @commands.hybrid_command(name="wink", aliases=[")", "-)"])
-    async def wink(self, ctx: commands.Context, *, user: discord.Member=None):
+    async def wink(self, ctx: commands.Context, *, user: typing.Optional[discord.Member]=None):
         '''
             Winks at someone.
 
@@ -146,17 +160,19 @@ class Fun(commands.Cog):
 
         embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
         message = random.choice(self.gif_cache[1121159013309087794])
-        if user == ctx.author:
+        try: author = ctx.author
+        except AttributeError: author = ctx.user
+        if user == author:
             embed.title = "Why are you winking at yourself?"
         embed.set_image(url=await self.get_gif(message))
 
         if user is None:
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, view=self.ActionBackView(author, "wink", self.wink, self))
         else:
-            await ctx.send(embed=embed, content=f"*wink wink* {user.mention}")
+            await ctx.send(embed=embed, content=f"*wink wink* {user.mention}", view=self.ActionBackView(author, "wink", self.wink, self))
 
     @commands.hybrid_command(name="pat", aliases=["*pats*", "pats", "patpat"])
-    async def pat(self, ctx: commands.Context, *, user: discord.Member=None):
+    async def pat(self, ctx: commands.Context, *, user: typing.Optional[discord.Member]=None):
         '''
             Pats someone.
 
@@ -177,17 +193,19 @@ class Fun(commands.Cog):
 
         embed = discord.Embed(title="*pat pat*", color=0x00ff00)
         message = random.choice(self.gif_cache[1121159545624985612])
-        if user == ctx.author:
+        try: author = ctx.author
+        except AttributeError: author = ctx.user
+        if user == author:
             embed.title = "*pats you*"
         embed.set_image(url=await self.get_gif(message))
 
         if user is None:
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, view=self.ActionBackView(author, "pat", self.pat, self))
         else:
-            await ctx.send(embed=embed, content=f"*pats {user.mention}*")
+            await ctx.send(embed=embed, content=f"*pats {user.mention}*", view=self.ActionBackView(author, "pat", self.pat, self))
 
     @commands.hybrid_command(name="hug", aliases=["*hugs*", "hugs", "bearhug"])
-    async def hug(self, ctx: commands.Context, *, user: discord.Member=None):
+    async def hug(self, ctx: commands.Context, *, user: typing.Optional[discord.Member]=None):
         '''
             Hugs someone.
 
@@ -209,17 +227,24 @@ class Fun(commands.Cog):
 
         embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
         message = random.choice(self.gif_cache[1121159519809048748])
-        if user == ctx.author:
+        try: author = ctx.author
+        except AttributeError: author = ctx.user
+        if user == author:
             embed.title = ("You must be really lonely to hug yourself.")
         embed.set_image(url=await self.get_gif(message))
 
         if user is None:
-            await ctx.send(embed=embed)
+            await ctx.reply(embed=embed, view=self.ActionBackView(author, "hug", self.hug, self))
         else:
-            await ctx.send(embed=embed, content=f"*hugs {user.mention}*")
+            await ctx.send(
+                embed=embed,
+                content=f"*{author.mention} hugs {user.mention}*",
+                view=self.ActionBackView(author, "hug", self.hug, self)
+            )
+
 
     @commands.hybrid_command(name="slap", aliases=[])
-    async def slap(self, ctx: commands.Context, *, user: discord.Member=None):
+    async def slap(self, ctx: commands.Context, *, user: typing.Optional[discord.Member]=None):
         '''
             Slaps someone.
 
@@ -244,17 +269,19 @@ class Fun(commands.Cog):
 
         embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
         message = random.choice(self.gif_cache[1191087790683869204])
-        if user == ctx.author:
+        try: author = ctx.author
+        except AttributeError: author = ctx.user
+        if user == author:
             embed.title = ("Why are you slapping yourself? lol")
         embed.set_image(url=await self.get_gif(message))
 
         if user is None:
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, view=self.ActionBackView(author, "slap", self.slap, self))
         else:
-            await ctx.send(embed=embed, content=f"*slaps {user.mention}*")
+            await ctx.send(embed=embed, content=f"*slaps {user.mention}*", view=self.ActionBackView(author, "slap", self.slap, self))
 
     @commands.hybrid_command(name="bonk", aliases=["bonks"])
-    async def bonk(self, ctx: commands.Context, *, user: discord.Member=None):
+    async def bonk(self, ctx: commands.Context, *, user: typing.Optional[discord.Member]=None):
         '''
             Bonks someone.
 
@@ -276,14 +303,16 @@ class Fun(commands.Cog):
 
         embed = discord.Embed(title=random.choice(message_choices), color=0x00ff00)
         message = random.choice(self.gif_cache[1191090178668888095])
-        if user == ctx.author:
+        try: author = ctx.author
+        except AttributeError: author = ctx.user
+        if user == author:
             embed.title = ("you look funny bonking yourself lol")
         embed.set_image(url=await self.get_gif(message))
 
         if user is None:
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, view=self.ActionBackView(author, "bonk", self.bonk, self))
         else:
-            await ctx.send(embed=embed, content=f"*bonks {user.mention}*")
+            await ctx.send(embed=embed, content=f"*bonks {user.mention}*", view=self.ActionBackView(author, "bonk", self.bonk, self))
 
     async def get_gif(self, message):
         if len(message.attachments) > 0:
