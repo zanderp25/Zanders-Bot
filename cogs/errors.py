@@ -54,126 +54,144 @@ class Errors(commands.Cog):
                 )
             except: pass
 
+        if ctx.message:
+            reference = ctx.message
+        else:
+            reference = None
+
         if isinstance(error, commands.CommandNotFound):
-            await ctx.reply(f"Command not found.")
+            await ctx.send(f"Command not found.", reference=reference)
         elif isinstance(error, commands.MemberNotFound):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"The member you are trying to {ctx.command.name} does not exist.", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.UserNotFound):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"The user does not exist.", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"{parent_name}{ctx.invoked_with} is missing an argument", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, moderation.MemberIsInGuild):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"No need to hackban someone who is already in the guild.", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.BadArgument):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"{parent_name}{ctx.invoked_with} is using an invalid argument", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.MissingPermissions):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.BotMissingPermissions):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"I don't have permission to do this", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, guild.NotInGuild):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"You're not in the correct guild.", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.NoPrivateMessage):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"This command can't be used in private messages", 
                 color=0xff0000,
-                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.CheckFailure):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"You don't have permission to use this command", 
                 color=0xff0000,
-                # description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                # description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.DisabledCommand):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"This command is disabled", 
                 color=0xff0000,
-                # description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}"
+                # description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         elif isinstance(error, commands.CommandInvokeError):
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"Error while executing command", 
                 color=0xff0000,
                 description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}\n"
-                    "**Error:**```py\n" f"{error}" "\n```"
+                    "**Error:**```py\n" f"{error}" "\n```",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
         else:
-            await ctx.reply(
+            await ctx.send(
                 embed=discord.Embed(title=f"Error while executing command", 
                 color=0xff0000,
                 description=f"**Usage:**\n{ctx.prefix}{parent_name}{ctx.invoked_with} {ctx.command.signature}\n"
-                    "**Error:**```py\n" f"{error}" "\n```"
+                    "**Error:**```py\n" f"{error}" "\n```",
                 ).set_footer(
                     text=f"Type {ctx.prefix}help {parent_name}{ctx.invoked_with} for more info"
-                )
+                ),
+                reference=reference,
             )
 
 async def setup(bot):
